@@ -19,7 +19,7 @@ public class PowerConsumption {
         // 2. with test data
         System.out.println("Result = " + getLifeSupportRating("data/daythree/testdata1.txt") + "\n");
 
-        // 2. with test data
+        // 2. with puzzle data
         System.out.println("Result = " + getLifeSupportRating("data/daythree/puzzledata2.txt") + "\n");
 
     }
