@@ -57,6 +57,21 @@ public class FileReader {
         return boards;
     }
 
+    // read a single line csv and return an int array
+    public static int[] getDataFromCSVFile(String filename) {
+        try(BufferedReader br = new BufferedReader(new java.io.FileReader(filename))) {
+            String line = br.readLine();
+            String[] tokens = line.split(",");
+            int[] data = new int[tokens.length];
+            for (int i = 0; i < data.length; i++) {
+                data[i] = Integer.parseInt(tokens[i]);
+            }
+            return data;
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
 
     public static ArrayList<String> getDataFromFile(String filename) {
         ArrayList<String> lines = new ArrayList<>();
