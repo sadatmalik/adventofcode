@@ -8,28 +8,22 @@ public class MinimumFuelCalculator {
 
     public static void main(String[] args) {
         // 1 & 2. with test data
-        getMinimumFuel("data/dayseven/testdata.txt");
+        int[] startPositions = getStartPositions("data/dayseven/testdata.txt");
+        System.out.println("Minimum consumption = " + calculateMinFuel(startPositions) + "\n");
 
         // 1 & 2. with puzzle data
-        getMinimumFuel("data/dayseven/puzzledata1.txt");
+        startPositions = getStartPositions("data/dayseven/puzzledata1.txt");
+        System.out.println("Minimum consumption = " + calculateMinFuel(startPositions) + "\n");
 
     }
 
-    private static void getMinimumFuel(String filename) {
+    private static int[] getStartPositions(String filename) {
         int[] positions = FileReader.getDataFromCSVFile(filename);
         System.out.println(Arrays.toString(positions));
-
-        int[] consumptions = calculateFuel(positions);
-        int max = (Arrays.stream(consumptions).max()).getAsInt();
-        for (int i = 0; i < consumptions.length; i++) {
-            if (consumptions[i] < max) {
-                max = consumptions[i];
-            }
-        }
-        System.out.println("\nMinimum fuel = " + max + "\n");
+        return positions;
     }
 
-    private static int[] calculateFuel(int[] positions) {
+    private static int calculateMinFuel(int[] positions) {
         int max = (Arrays.stream(positions).max()).getAsInt();
         System.out.println("Max = " + max);
 
@@ -42,11 +36,11 @@ public class MinimumFuelCalculator {
                 // 2. fuel += diff2(positions[j], i);
                 fuel += diff2(positions[j], i);
             }
-            System.out.println("Fuel at " + i + " = " + fuel);
+            // System.out.println("Fuel at " + i + " = " + fuel);
             consumptions[i] = fuel;
         }
 
-        return consumptions;
+        return (Arrays.stream(consumptions).min()).getAsInt();
     }
 
     private static int diff2(int start, int end) {
