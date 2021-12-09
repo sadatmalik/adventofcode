@@ -63,7 +63,6 @@ public class SmokeBasin {
         System.out.println("\nMultiple of 3 largest : " + a + " * " + b + " * " + c + " = " + a * b * c);
     }
 
-
     private static void scanBasinFloorData(ArrayList<String> data) {
         // read first line
         for (int row = 0; row < data.size(); row++) {
