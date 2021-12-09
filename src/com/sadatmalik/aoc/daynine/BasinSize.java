@@ -33,5 +33,4 @@ public class BasinSize {
         populateBasin(node.down);
     }
 
-
 }
