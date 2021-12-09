@@ -9,16 +9,24 @@ import java.util.List;
 public class SmokeBasin {
     static Node[][] nodes;
     static List<Node> nodeList; //easy scanning
+    static List<Node> lowPoints;
     static int basinX;
     static int basinY;
 
     public static void main(String[] args) {
         //1. with test data
-        runSimulation("data/daynine/testdata.txt");
+        //runSimulation("data/daynine/testdata.txt");
+
+        //2. with test data
+        // calculateBasinSizes();
+        // calculateResult();
 
         //1. with puzzle data
         runSimulation("data/daynine/puzzledata1.txt");
 
+        //2. with test data
+        calculateBasinSizes();
+        calculateResult();
     }
 
     private static void runSimulation(String filename) {
@@ -31,6 +39,30 @@ public class SmokeBasin {
         printNodeGrid();
         System.out.println("\nTotal risk level = " +processRiskLevel() + "\n");
     }
+
+    private static void calculateBasinSizes() {
+        for (Node n : lowPoints) {
+            BasinSize basin = new BasinSize(n);
+            System.out.println("Basin size = " + basin.getBasinSize());
+            n.basin = basin;
+        }
+    }
+
+    private static void calculateResult() {
+        int[] sizes = new int[lowPoints.size()];
+
+        for (int i = 0; i < sizes.length; i++) {
+            sizes[i] = lowPoints.get(i).basin.getBasinSize();
+        }
+        Arrays.sort(sizes);
+
+        int a = sizes[sizes.length-1];
+        int b = sizes[sizes.length-2];
+        int c = sizes[sizes.length-3];
+
+        System.out.println("\nMultiple of 3 largest : " + a + " * " + b + " * " + c + " = " + a * b * c);
+    }
+
 
     private static void scanBasinFloorData(ArrayList<String> data) {
         // read first line
@@ -95,10 +127,12 @@ public class SmokeBasin {
 
     private static int processRiskLevel() {
         int riskLevel = 0;
+        lowPoints = new ArrayList<>();
         for (Node node : nodeList) {
             if (node.isLow()) {
                 System.out.println("Found low point = " + node.height);
                 riskLevel += node.riskLevel;
+                lowPoints.add(node);
             }
         }
         return riskLevel;

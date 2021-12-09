@@ -9,6 +9,8 @@ public class Node {
 
     int riskLevel;
 
+    BasinSize basin;
+
     public Node(int height) {
         this.height = height;
         this.riskLevel = height + 1;
