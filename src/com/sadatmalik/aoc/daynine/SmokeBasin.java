@@ -15,11 +15,11 @@ public class SmokeBasin {
 
     public static void main(String[] args) {
         //1. with test data
-        //runSimulation("data/daynine/testdata.txt");
+        runSimulation("data/daynine/testdata.txt");
 
         //2. with test data
-        // calculateBasinSizes();
-        // calculateResult();
+        calculateBasinSizes();
+        calculateResult();
 
         //1. with puzzle data
         runSimulation("data/daynine/puzzledata1.txt");
