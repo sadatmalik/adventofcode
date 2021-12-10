@@ -38,7 +38,6 @@ public class SyntaxScoring {
         incompleteLines = cleanCorruptedLines("data/dayten/puzzledata1.txt");
         // part 2.
         completeLines(incompleteLines);
-
     }
 
     private static void completeLines(ArrayList<String> incompleteLines) {
@@ -95,7 +94,7 @@ public class SyntaxScoring {
                 return findMissingTokens(tokens, missingTokens);
             }
         }
-
+        
         return null;
     }
 
