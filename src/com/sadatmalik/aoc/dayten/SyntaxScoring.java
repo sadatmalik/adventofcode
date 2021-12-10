@@ -9,6 +9,7 @@ public class SyntaxScoring {
     static Set<Character> openingChars = new HashSet<Character>(Set.of('(', '[', '{', '<'));
     static Map<Character, Character> pairs = new HashMap<>();
     static Map<Character, Integer> scores = new HashMap<>();
+    static Map<Character, Integer> completionScores = new HashMap<>();
 
     static {
         pairs.put('(', ')');
@@ -20,22 +21,90 @@ public class SyntaxScoring {
         scores.put(']', 57);
         scores.put('}', 1197);
         scores.put('>', 25137);
+
+        completionScores.put(')', 1);
+        completionScores.put(']', 2);
+        completionScores.put('}', 3);
+        completionScores.put('>', 4);
     }
 
     public static void main(String[] args) {
-        // 1. with test data
-        cleanCorruptedLines("data/dayten/testdata.txt");
+        // part 1. with test data
+        ArrayList<String> incompleteLines = cleanCorruptedLines("data/dayten/testdata.txt");
+        // part 2.
+        completeLines(incompleteLines);
 
-        // 1. with puzzle data
-        cleanCorruptedLines("data/dayten/puzzledata1.txt");
+        // part 1. with puzzle data
+        incompleteLines = cleanCorruptedLines("data/dayten/puzzledata1.txt");
+        // part 2.
+        completeLines(incompleteLines);
 
     }
 
-    private static void cleanCorruptedLines(String filename) {
+    private static void completeLines(ArrayList<String> incompleteLines) {
+        System.out.println("\nMissing tokens:");
+        long[] scores = new long[incompleteLines.size()];
+        int scoreIndex = 0;
+
+        for (String line : incompleteLines) {
+            ArrayList<Character> chars = new ArrayList<>();
+            for (char c : line.toCharArray()) {
+                chars.add(c);
+            }
+            StringBuffer missingTokens = findMissingTokens(chars, new StringBuffer());
+            long score = getScore(missingTokens);
+            scores[scoreIndex] = score;
+            scoreIndex++;
+            System.out.println(line + " - Complete by adding " + missingTokens.toString() +
+                    " - " + score + " total points");
+        }
+        Arrays.sort(scores);
+        System.out.println("\nMiddle score = " + scores[scores.length / 2]);
+
+    }
+
+    private static long getScore(StringBuffer missingTokens) {
+        char[] chars = missingTokens.toString().toCharArray();
+        long score = 0L;
+        for (char c : chars) {
+            score *= 5;
+            score += completionScores.get(c);
+        }
+        return score;
+    }
+
+    private static StringBuffer findMissingTokens(ArrayList<Character> tokens, StringBuffer missingTokens) {
+        if (tokens.size() == 0) {
+            return missingTokens;
+        }
+
+        char token = tokens.get(tokens.size()-1);
+        if (isOpeningChar(token)) {
+            missingTokens.append(String.valueOf(pairs.get(token)));
+            tokens.remove(tokens.size()-1);
+            return findMissingTokens(tokens, missingTokens);
+        }
+
+        for (int i = tokens.size()-1; i >= 0; i--) {
+            if (isOpeningChar(tokens.get(i))) {
+                char match = tokens.get(i+1);
+                //System.out.println("Found match = " + isMatchingPair(tokens.get(i), match, null));
+                tokens.remove(i+1);
+                tokens.remove(i);
+
+                return findMissingTokens(tokens, missingTokens);
+            }
+        }
+
+        return null;
+    }
+
+    private static ArrayList<String> cleanCorruptedLines(String filename) {
         ArrayList<String> lines = FileReader.getDataFromFile(filename);
         ArrayList<String> cleanedData = parseLines(lines);
         System.out.println("\nCleaned data:");
         printLines(cleanedData);
+        return cleanedData;
     }
 
     private static ArrayList<String> parseLines(ArrayList<String> lines) {
@@ -71,7 +140,9 @@ public class SyntaxScoring {
     private static boolean isMatchingPair(char previous, char c, String line) {
         char expectedClose = pairs.get(previous);
         if (!(expectedClose == c)) {
-            System.out.println(line + " - Expected " + expectedClose + ", but found " + c + " instead.");
+            if (line != null) {
+                System.out.println(line + " - Expected " + expectedClose + ", but found " + c + " instead.");
+            }
             return false;
         }
         return true;
