@@ -6,7 +6,7 @@ import java.util.*;
 
 public class SyntaxScoring {
 
-    static Set<Character> openingChars = new HashSet<Character>(Set.of('(', '[', '{', '<'));
+    static Set<Character> openingChars = new HashSet<>(Set.of('(', '[', '{', '<'));
     static Map<Character, Character> pairs = new HashMap<>();
     static Map<Character, Integer> scores = new HashMap<>();
     static Map<Character, Integer> completionScores = new HashMap<>();
@@ -54,7 +54,7 @@ public class SyntaxScoring {
             long score = getScore(missingTokens);
             scores[scoreIndex] = score;
             scoreIndex++;
-            System.out.println(line + " - Complete by adding " + missingTokens.toString() +
+            System.out.println(line + " - Complete by adding " + missingTokens +
                     " - " + score + " total points");
         }
         Arrays.sort(scores);
@@ -72,29 +72,30 @@ public class SyntaxScoring {
         return score;
     }
 
+    // recursive
     private static StringBuffer findMissingTokens(ArrayList<Character> tokens, StringBuffer missingTokens) {
         if (tokens.size() == 0) {
             return missingTokens;
         }
 
+        // found unpaired open
         char token = tokens.get(tokens.size()-1);
         if (isOpeningChar(token)) {
-            missingTokens.append(String.valueOf(pairs.get(token)));
+            missingTokens.append(pairs.get(token));
             tokens.remove(tokens.size()-1);
             return findMissingTokens(tokens, missingTokens);
         }
 
+        // found matching pair
         for (int i = tokens.size()-1; i >= 0; i--) {
             if (isOpeningChar(tokens.get(i))) {
-                char match = tokens.get(i+1);
-                //System.out.println("Found match = " + isMatchingPair(tokens.get(i), match, null));
                 tokens.remove(i+1);
                 tokens.remove(i);
 
                 return findMissingTokens(tokens, missingTokens);
             }
         }
-        
+
         return null;
     }
 
