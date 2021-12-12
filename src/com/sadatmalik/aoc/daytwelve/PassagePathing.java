@@ -163,11 +163,11 @@ public class PassagePathing {
         for (Node node : smallCaves) {
             visitedSmallCaves = new ArrayList<>();
             StringBuffer sb = new StringBuffer("start");
-            System.out.println("Double visit node = " + node);
+            //System.out.println("Double visit node = " + node);
             visitCavesWithExemption(root, sb, visitedSmallCaves, node, true);
-            System.out.println("\nTotal paths = " + pathsFound + "\n");
         }
 
+        System.out.println("\nTotal paths = " + pathsFound + "\n");
 
     }
 
@@ -203,12 +203,10 @@ public class PassagePathing {
 
             visitCaves(nextNode, new StringBuffer(sb), visited);
         }
-
     }
 
     private static void visitCavesWithExemption(Node node, StringBuffer sb, List visitedSmallCaves,
                                                 Node exemption, boolean isExempt) {
-
         if (node.nodeName.equals("end")) {
             sb.append(", " + node.nodeName);
             String path = sb.toString();
@@ -240,7 +238,6 @@ public class PassagePathing {
             ArrayList<Node> visited = new ArrayList(visitedSmallCaves);
             visitCavesWithExemption(nextNode, new StringBuffer(sb), visited, exemption, isExempt);
         }
-
     }
 
     private static void printDataPoints(List<String[]> dataPoints) {
