@@ -87,7 +87,6 @@ public class Grid {
         return grid;
     }
 
-
     public boolean isMarked(int x, int y) {
         return grid[x][y] == '#';
     }
@@ -120,5 +119,4 @@ public class Grid {
         }
         return sb.toString();
     }
-
 }

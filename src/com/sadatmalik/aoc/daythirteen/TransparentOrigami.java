@@ -70,5 +70,4 @@ public class TransparentOrigami {
             System.out.println(e.getMessage());
         }
     }
-
 }
