@@ -7,23 +7,7 @@ public class CheckPolymer {
 
     static Map<Character, Long> charCount;
 
-    public static long process(String lastPair, Map<String, Long> pairsCountMap) {
-        Map<Character, Long> finalCount = new HashMap<>();
-        for (String pair : pairsCountMap.keySet()) {
-            Character firstLetter = pair.charAt(0);
-            if (finalCount.containsKey(firstLetter)) {
-                finalCount.put(firstLetter, finalCount.get(firstLetter) + pairsCountMap.get(pair));
-            } else {
-                finalCount.put(firstLetter, pairsCountMap.get(pair));
-            }
-        }
-        Character lastChar = lastPair.charAt(1);
-        finalCount.put(lastChar, finalCount.get(lastChar) + 1);
-
-        charCount = finalCount;
-        return calculateResult();
-    }
-
+    // part 1
     public static long process(String polymer) {
         charCount = new HashMap<>();
 
@@ -54,4 +38,22 @@ public class CheckPolymer {
         return result;
     }
 
+    // part 2
+    public static long process(String lastPair, Map<String, Long> pairsCountMap) {
+        Map<Character, Long> finalCount = new HashMap<>();
+        for (String pair : pairsCountMap.keySet()) {
+            Character firstLetter = pair.charAt(0);
+            if (finalCount.containsKey(firstLetter)) {
+                finalCount.put(firstLetter, finalCount.get(firstLetter) + pairsCountMap.get(pair));
+            } else {
+                finalCount.put(firstLetter, pairsCountMap.get(pair));
+            }
+        }
+        Character lastChar = lastPair.charAt(1);
+        finalCount.put(lastChar, finalCount.get(lastChar) + 1);
+
+        charCount = finalCount;
+
+        return calculateResult();
+    }
 }

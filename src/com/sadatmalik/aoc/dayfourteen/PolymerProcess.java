@@ -14,6 +14,31 @@ public class PolymerProcess {
         this.mappings = mappings;
     }
 
+    // part 1
+    public String polymerize(int steps) {
+        StringBuffer sb = null;
+
+        for (int p = 1; p <= steps; p++) {
+            sb = new StringBuffer();
+
+            // cycle one pair at a time
+            for (int i = 0; i < template.length() - 1; i++) {
+                String pair = template.substring(i, i + 2);
+                String insert = mappings.get(pair);
+                if (insert != null) {
+                    sb.append(template.charAt(i) + insert);
+                } else {
+                    sb.append(template.charAt(i));
+                }
+            }
+            sb.append(template.charAt(template.length() - 1));
+            System.out.println("Step " + p);
+            template = sb.toString();
+        }
+        return sb.toString();
+    }
+
+    // part 2
     public String polymerize2(int steps) {
         // 1. setup initial pairs from base template, keep track of last pair
         String lastPair = setUpPairsCountMap();
@@ -28,13 +53,17 @@ public class PolymerProcess {
         return lastPair;
     }
 
-    private String nextLastPair(String lastPair) {
-        String insert = mappings.get(lastPair);
-        if (insert == null) {
-            return lastPair;
-        } else {
-            return insert + lastPair.charAt(1);
+    private String setUpPairsCountMap() {
+        pairsCountMap = new HashMap<>();
+        for (int i = 0; i < template.length() - 1; i++) {
+            String pair = template.substring(i, i + 2);
+            if (pairsCountMap.containsKey(pair)) {
+                pairsCountMap.put(pair, pairsCountMap.get(pair) + 1);
+            } else {
+                pairsCountMap.put(pair, 1L);
+            }
         }
+        return template.substring(template.length()-2);
     }
 
     private void generateNewPairs() {
@@ -65,39 +94,13 @@ public class PolymerProcess {
         pairsCountMap = newPairs;
     }
 
-    private String setUpPairsCountMap() {
-        pairsCountMap = new HashMap<>();
-        for (int i = 0; i < template.length() - 1; i++) {
-            String pair = template.substring(i, i + 2);
-            if (pairsCountMap.containsKey(pair)) {
-                pairsCountMap.put(pair, pairsCountMap.get(pair) + 1);
-            } else {
-                pairsCountMap.put(pair, 1L);
-            }
+    private String nextLastPair(String lastPair) {
+        String insert = mappings.get(lastPair);
+        if (insert == null) {
+            return lastPair;
+        } else {
+            return insert + lastPair.charAt(1);
         }
-        return template.substring(template.length()-2);
     }
 
-    public String polymerize(int steps) {
-        StringBuffer sb = null;
-
-        for (int p = 1; p <= steps; p++) {
-             sb = new StringBuffer();
-
-            // cycle one pair at a time
-            for (int i = 0; i < template.length() - 1; i++) {
-                String pair = template.substring(i, i + 2);
-                String insert = mappings.get(pair);
-                if (insert != null) {
-                    sb.append(template.charAt(i) + insert);
-                } else {
-                    sb.append(template.charAt(i));
-                }
-            }
-            sb.append(template.charAt(template.length() - 1));
-            System.out.println("Step " + p);
-            template = sb.toString();
-        }
-        return sb.toString();
-    }
 }
