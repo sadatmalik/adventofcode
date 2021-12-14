@@ -16,6 +16,8 @@ public class PolymerProcess {
     }
 
     // part 1
+    // iterates through template string applying insertion rules to each
+    // character pair. returns the modified string.
     public String polymerize(int steps) {
         StringBuffer sb = null;
 
@@ -40,6 +42,10 @@ public class PolymerProcess {
     }
 
     // part 2
+    // creates a mapping of each pair and the number of times it appears in the template
+    // applies insertion rules, generating a new map of pairs and the number of times it appears
+    // keeps track of the last pair in the sequence - could refactor this as only need the last
+    // character which in fact never changes
     public String polymerize2(int steps) {
         // 1. setup initial pairs from base template, keep track of last pair
         String lastPair = setUpPairsCountMap();

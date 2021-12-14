@@ -45,12 +45,14 @@ public class ExtendedPolymerization {
         try(BufferedReader br = new BufferedReader(new java.io.FileReader(filename))) {
             String line = br.readLine();
             while (line != null && !line.equals("")) {
+                //read polymer template
                 baseString = line;
                 line = br.readLine();
             }
 
             line = br.readLine();
 
+            //read pair insertion rules
             while (line != null) {
                 String[] tokens = line.split(" -> ");
                 mappings.put(tokens[0], tokens[1]);
