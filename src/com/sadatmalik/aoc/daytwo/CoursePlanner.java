@@ -10,22 +10,22 @@ public class CoursePlanner {
 
     public static void main(String[] args) {
         // 1. with test data
-        ArrayList commands = getTestCommandsFromFile("daytwo/testdata1.txt");
+        ArrayList commands = getTestCommandsFromFile("data/daytwo/testdata1.txt");
         System.out.println(commands.toString());
         System.out.println("Result = " + calculateResult(commands));
 
         // 1. with puzzle data
-        commands = getTestCommandsFromFile("daytwo/puzzledata1.txt");
+        commands = getTestCommandsFromFile("data/daytwo/puzzledata1.txt");
         System.out.println(commands.toString());
         System.out.println("Result = " + calculateResult(commands));
 
         // 2. with test data
-        commands = getTestCommandsFromFile("daytwo/testdata1.txt");
+        commands = getTestCommandsFromFile("data/daytwo/testdata1.txt");
         System.out.println(commands.toString());
         System.out.println("Result = " + calculateResultUsingAim(commands));
 
         // 2. with puzzle data
-        commands = getTestCommandsFromFile("daytwo/puzzledata2.txt");
+        commands = getTestCommandsFromFile("data/daytwo/puzzledata2.txt");
         System.out.println(commands.toString());
         System.out.println("Result = " + calculateResultUsingAim(commands));
 
