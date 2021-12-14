@@ -3,6 +3,7 @@ package com.sadatmalik.aoc.dayfourteen;
 import java.util.HashMap;
 import java.util.Map;
 
+//applies polymerization rules
 public class PolymerProcess {
 
     String template;

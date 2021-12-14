@@ -3,6 +3,7 @@ package com.sadatmalik.aoc.dayfourteen;
 import java.util.HashMap;
 import java.util.Map;
 
+//calculate result value
 public class CheckPolymer {
 
     static Map<Character, Long> charCount;
