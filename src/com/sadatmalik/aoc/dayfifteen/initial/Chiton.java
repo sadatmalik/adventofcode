@@ -1,4 +1,4 @@
-package com.sadatmalik.aoc.dayfifteen;
+package com.sadatmalik.aoc.dayfifteen.initial;
 
 import com.sadatmalik.aoc.FileReader;
 
@@ -21,10 +21,10 @@ public class Chiton {
 
     public static void main(String[] args) {
         // 1. with test data
-        runPathfinder("data/dayfifteen/testdata.txt");
+        //runPathfinder("data/dayfifteen/testdata.txt");
 
         // 1. with puzzle data
-        //runPathfinder("data/dayfifteen/puzzledata1.txt");
+        runPathfinder("data/dayfifteen/puzzledata1.txt");
 
     }
 
@@ -34,7 +34,7 @@ public class Chiton {
         printGrid();
         initializeNodes();
         initializeNodeGraph();
-        printGraph();
+        //printGraph();
         findLeastRiskyPath();
         System.out.println("Least risk path = " + costsFromStart.get(end));
     }
@@ -146,7 +146,10 @@ public class Chiton {
     private static void findLeastRiskyPath() {
         visited = new ArrayList<>();
         Node node = findLowestCostNode();
+        int count = 1;
         while (node != null) {
+            //printGraph();
+            System.out.println(count++);
             Integer cost = costsFromStart.get(node);
             Map<Node, Integer> neighbours = graph.get(node);
 
@@ -160,6 +163,7 @@ public class Chiton {
             visited.add(node);
             node = findLowestCostNode();
         }
+        System.out.println("Ending while loop");
     }
 
     private static Node findLowestCostNode() {
@@ -197,7 +201,10 @@ public class Chiton {
             sb.append("Node " + node + ", Neighbours =");
             Map<Node, Integer> neighbours = graph.get(node);
             for (Node entry : neighbours.keySet()) {
-                sb.append(" [" + entry + ", Cost from start: " + neighbours.get(entry) + "]");
+                Integer costFromStart = costsFromStart.get(entry);
+                if (costFromStart < Integer.MAX_VALUE) {
+                    sb.append(" [" + entry + ", Cost from start: " + costsFromStart.get(entry) + "]");
+                }
             }
             sb.append("\n");
         }

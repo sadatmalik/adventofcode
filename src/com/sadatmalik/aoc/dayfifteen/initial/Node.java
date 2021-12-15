@@ -1,4 +1,4 @@
-package com.sadatmalik.aoc.dayfifteen;
+package com.sadatmalik.aoc.dayfifteen.initial;
 
 import java.util.ArrayList;
 import java.util.List;
