@@ -94,15 +94,13 @@ public class DjikstraWithPriorityQueue {
         // Calculating the single source shortest path
         DjikstraWithPriorityQueue dpq = new DjikstraWithPriorityQueue(numNodes);
         dpq.dijkstra(adjacencyList, source);
-
-        // Printing the shortest path to all the nodes
-        // from the source node
         System.out.println("The shortest path from start to end node : " + dpq.dist[dpq.dist.length-1]);
 
-//        for (int i = 0; i < dpq.dist.length; i++) {
-//            System.out.println(source + " to " + i + " is "
-//                    + dpq.dist[i]);
-//        }
+        // Printing the shortest path to all the nodes from the source node
+        //  for (int i = 0; i < dpq.dist.length; i++) {
+        //    System.out.println(source + " to " + i + " is "
+        //              + dpq.dist[i]);
+        //  }
     }
 }
 
