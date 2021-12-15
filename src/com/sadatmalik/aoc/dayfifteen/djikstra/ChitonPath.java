@@ -1,11 +1,10 @@
 package com.sadatmalik.aoc.dayfifteen.djikstra;
 
 import com.sadatmalik.aoc.FileReader;
+import com.sadatmalik.aoc.dayfifteen.djikstra.priorityqueue.DjikstraWithPriorityQueue;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class ChitonPath {
 
@@ -13,24 +12,39 @@ public class ChitonPath {
     static int gridY;
     static Node[][] grid;
     static List<Node> nodes;
-    static Map<Node, Integer> riskLevel;
+    //static Map<Node, Integer> riskLevel;
     static Node start;
     static Node end;
 
     public static void main(String[] args) {
         // 1. with test data
         //runPathfinder("data/dayfifteen/testdata.txt");
+
         // 1. with puzzle data
         //runPathfinder("data/dayfifteen/puzzledata1.txt");
 
         // 2. with test data
+        //runPathfinder2("data/dayfifteen/testdata.txt");
+
+        // 2. with test data
+        runPathfinder2("data/dayfifteen/puzzledata1.txt");
+
     }
 
     private static void runPathfinder(String filename) {
         ArrayList<String> data = FileReader.getDataFromFile(filename);
         initializeNodeGrid(data);
         setupNodePaths();
-        findShortestPath();
+        DjikstraWithPriorityQueue.runAlgorithm(nodes);
+        //findShortestPath();
+    }
+
+    private static void runPathfinder2(String filename) {
+        ArrayList<String> data = FileReader.getDataFromFile(filename);
+        initializeNodeGrid2(data);
+        setupNodePaths();
+        DjikstraWithPriorityQueue.runAlgorithm(nodes);
+        //findShortestPath();
     }
 
     private static void initializeNodeGrid(ArrayList<String> data) {
@@ -41,22 +55,51 @@ public class ChitonPath {
 
         grid = new Node[gridX][gridY];
         nodes = new ArrayList<>();
-        riskLevel = new HashMap<>();
+
 
         int nodeNumber = 1;
         for (int y = 0; y < gridY; y++) {
             String row = data.get(y);
             String[] values = row.split("");
             for (int x = 0; x < gridX; x++) {
-                Node node = new Node(String.valueOf(nodeNumber));
+                Node node = new Node(String.valueOf(nodeNumber), Integer.parseInt(values[x]));
                 grid[x][y] = node;
                 nodes.add(node);
-
-
-                // test
-                riskLevel.put(node, Integer.parseInt(values[x]));
             }
         }
+    }
+
+    private static void initializeNodeGrid2(ArrayList<String> data) {
+        gridX = data.size(); // rows
+        String firstRow = data.get(0);
+        gridY = firstRow.length();
+        System.out.println("x = " + gridX + ", y = " + gridY);
+
+        grid = new Node[gridX][gridY];
+        nodes = new ArrayList<>();
+
+        int nodeNumber = 1;
+        for (int y = 0; y < gridY; y++) {
+            String row = data.get(y);
+            String[] values = row.split("");
+            for (int x = 0; x < gridX; x++) {
+                Node node = new Node(String.valueOf(nodeNumber), Integer.parseInt(values[x]));
+                grid[x][y] = node;
+            }
+        }
+
+        // second pass
+        gridY *= 5;
+        gridX *= 5;
+        grid = TranslateGrid.translate(grid, gridX, gridY);
+        System.out.println("New x = " + gridX + ", New y = " + gridY);
+        for (int y = 0; y < gridY; y++) {
+            for (int x = 0; x < gridX; x++) {
+                Node node = grid[x][y];
+                nodes.add(node);
+            }
+        }
+        //printGrid();
     }
 
     private static void setupNodePaths() {
@@ -106,14 +149,14 @@ public class ChitonPath {
 
     private static void setLeftNode(Node node, int x, int y) {
         Node leftNode = grid[x-1][y];
-        node.addDestination(leftNode, riskLevel.get(leftNode));
-        leftNode.addDestination(node, riskLevel.get(node));
+        node.addDestination(leftNode, leftNode.getRiskLevel());
+        leftNode.addDestination(node, node.getRiskLevel());
     }
 
     private static void setTopNode(Node node, int x, int y) {
         Node upNode = grid[x][y-1];
-        node.addDestination(upNode, riskLevel.get(upNode));
-        upNode.addDestination(node, riskLevel.get(node));
+        node.addDestination(upNode, upNode.getRiskLevel());
+        upNode.addDestination(node, node.getRiskLevel());
     }
 
     private static void findShortestPath() {
@@ -125,6 +168,16 @@ public class ChitonPath {
 
         System.out.println("Shortest path length = " + end.getDistance());
     }
+
+    private static void printGrid() {
+        for (int y = 0; y < gridY; y++) {
+            for (int x = 0; x < gridX; x++) {
+                System.out.print(grid[x][y]);
+            }
+            System.out.println();
+        }
+    }
+
 
 
 }

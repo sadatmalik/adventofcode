@@ -7,19 +7,28 @@ import java.util.Map;
 
 public class Node {
     private String name;
+    private int riskLevel;
 
     private List<Node> shortestPath = new LinkedList<>();
     private Integer distance = Integer.MAX_VALUE;
     Map<Node, Integer> adjacentNodes = new HashMap<>();
 
-    public Node(String name) {
+    public Node(String name, int riskLevel) {
         this.name = name;
+        this.riskLevel = riskLevel;
     }
 
     public void addDestination(Node destination, int distance) {
         adjacentNodes.put(destination, distance);
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public int getRiskLevel() {
+        return riskLevel;
+    }
 
     public void setDistance(Integer distance) {
         this.distance = distance;
@@ -39,5 +48,13 @@ public class Node {
 
     public void setShortestPath(List<Node> shortestPath) {
         this.shortestPath = shortestPath;
+    }
+
+    @Override
+    public String toString() {
+        return "Node{" +
+                "name=" + name +
+                ", riskLevel=" + riskLevel +
+                '}';
     }
 }
