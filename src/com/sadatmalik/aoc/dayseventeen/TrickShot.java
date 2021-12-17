@@ -6,39 +6,41 @@ public class TrickShot {
     static Position pos;
     static Velocity velocity;
 
-    static boolean insufficientX;
-    static boolean overshotY;
-    static boolean overshotX;
-
-    static int peak;
+    static int peak = Integer.MIN_VALUE;
+    static int landed;
 
     public static void main(String[] args) {
         // sample data: target area: x=20..30, y=-10..-5
         //target = new Target(20, 30, -10, -5);
+        //runTests();
 
         // puzzle data: target area: x=244..303, y=-91..-54
         target = new Target(244, 303, -91, -54);
-        findBestTrickShot(100, 100);
+        findBestTrickShot(0,500, -500,500);
 
     }
 
-    private static void findBestTrickShot(int xRange, int yRange) {
-        int[][] peakHeights = new int[xRange][yRange];
-        for (int x = 0; x < xRange; x++) {
-            for (int y = 0; y < yRange; y++) {
-                velocity = new Velocity(x, y);
+    private static void findBestTrickShot(int xLower, int xUpper, int yLower, int yUpper) {
+        int xLength = xUpper - xLower;
+        int yLength = yUpper - yLower;
+        int[][] peakHeights = new int[xLength][yLength];
+        for (int x = 0; x < xLength; x++) {
+            for (int y = 0; y < yLength; y++) {
+                velocity = new Velocity(x, yLower + y);
                 int peakHeight = runSimulation();
                 peakHeights[x][y] = peakHeight;
             }
         }
-        printPeaks(peakHeights, xRange, yRange);
+        //printPeaks(peakHeights, xLength, yLength);
         System.out.println("Heighest shot = " + peak);
+        System.out.println("Total landed = " + landed);
     }
 
     private static void printPeaks(int[][] peakHeights, int xRange, int yRange) {
         for (int y = 0; y < yRange; y++) {
-            for (int x = 0; x < yRange; x++) {
-                System.out.printf("%4d ", peakHeights[x][y]);
+            for (int x = 0; x < xRange; x++) {
+                int height = peakHeights[x][y];
+                System.out.printf("%4d ", height);
             }
             System.out.println();
         }
@@ -46,7 +48,7 @@ public class TrickShot {
 
     private static int runSimulation() {
         pos = new Position(0,0);
-        int peakHeight = 0;
+        int peakHeight = Integer.MIN_VALUE;
         while(!shotTooFar()) {
             step();
             if (pos.y > peakHeight)
@@ -79,6 +81,7 @@ public class TrickShot {
     private static boolean onTarget() {
         if ((pos.x >= target.left && pos.x <= target.right) &&
                 (pos.y >= target.bottom && pos.y <= target.top)) {
+            landed++;
             return true;
         }
         return false;
@@ -103,6 +106,10 @@ public class TrickShot {
 
         velocity = new Velocity(17, -4);
         runSimulation();
+
+        velocity = new Velocity(23, -10);
+        runSimulation();
+
     }
 
 }
