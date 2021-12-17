@@ -1,5 +1,8 @@
 package com.sadatmalik.aoc.daysixteen;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Parser {
 
     static String hex;
@@ -21,29 +24,50 @@ public class Parser {
 
         while (cursor < length) {
             int start = cursor;
-            String value = parsePacket();
-            System.out.println("Read: " + value);
+            long value = parsePacket();
+            System.out.println("Result: " + value);
             int bitsRead = cursor - start;
             cursor = cursor + (8 - (bitsRead % 8));
         }
     }
 
-    private static String parsePacket() {
+    private static long parsePacket() {
         int version = readInt(3);
         versionSum += version;
 
         int typeId = readInt(3);
 
         switch(typeId) {
+            case 0:
+                return parseSum();
+
+            case 1:
+                return parseProduct();
+
+            case 2:
+                return parseMin();
+
+            case 3:
+                return parseMax();
+
             case 4:
                 return parseLiteral();
 
+            case 5:
+                return parseGreaterThan();
+
+            case 6:
+                return parseLessThan();
+
+            case 7:
+                return parseEquals();
+
             default:
-                return parseOp();
+                return 0;
         }
     }
 
-    private static String parseLiteral() {
+    private static long parseLiteral() {
         String checkBit = readString(1);
 
         StringBuilder result = new StringBuilder();
@@ -55,26 +79,85 @@ public class Parser {
         String read = readString(4);
         result.append(read);
 
-        return String.valueOf(Utils.binToLong(result.toString()));
+        return Utils.binToLong(result.toString());
     }
 
-    private static String parseOp() {
-        StringBuilder result = new StringBuilder();
+    private static long parseSum() {
+        List<Long> values = parseOp();
+        long result = 0;
+        for (Long value : values) {
+            result += value;
+        }
+        return result;
+    }
+
+    private static long parseProduct() {
+        List<Long> values = parseOp();
+        long result = 1;
+        for (Long value : values) {
+            result *= value;
+        }
+        return result;
+    }
+
+    private static long parseMin() {
+        List<Long> values = parseOp();
+        long result = Long.MAX_VALUE;
+        for (Long value : values) {
+            if (value < result)
+                result = value;
+        }
+        return result;
+    }
+
+    private static long parseMax() {
+        List<Long> values = parseOp();
+        long result = Long.MIN_VALUE;
+        for (Long value : values) {
+            if (value > result)
+                result = value;
+        }
+        return result;
+    }
+
+    private static long parseGreaterThan() {
+        List<Long> values = parseOp();
+        if (values.get(0) > values.get(1))
+            return 1;
+        return 0;
+    }
+
+    private static long parseLessThan() {
+        List<Long> values = parseOp();
+        if (values.get(0) < values.get(1))
+            return 1;
+        return 0;
+    }
+
+    private static long parseEquals() {
+        List<Long> values = parseOp();
+        if (values.get(0).equals(values.get(1)))
+            return 1;
+        return 0;
+    }
+
+    private static List<Long> parseOp() {
+        List<Long> values = new ArrayList<>();
         int lengthType = readInt(1);
         if (lengthType == 0) {
             int subPacketsLength = readInt(15);
             int end = cursor + subPacketsLength;
             while (cursor != end) {
-                result.append(parsePacket());
+                values.add(parsePacket());
             }
         }
         if (lengthType == 1) {
             int numSubPackets = readInt(11);
             for (int n = 0; n < numSubPackets; n++) {
-                result.append(parsePacket());
+                values.add(parsePacket());
             }
         }
-        return result.toString();
+        return values;
     }
 
     private static String readString(int numBits) {
