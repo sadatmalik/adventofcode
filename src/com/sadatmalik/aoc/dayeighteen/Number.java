@@ -6,6 +6,7 @@ public class Number {
     private int depth;
     private int maxValue;
     private Node explodingNode;
+    private Node splittingNode;
 
     StringBuffer sb;
 
@@ -71,6 +72,8 @@ public class Number {
         if (depth > 4) {
             explode(explodingNode);
             explodingNode = null;
+            //for testing
+            //System.out.println(this);
             reduce();
             return;
         }
@@ -78,7 +81,10 @@ public class Number {
         maxValue = 0;
         getMaxValue(root);
         if (maxValue > 9) {
-            //split(root);
+            split(splittingNode);
+            splittingNode = null;
+            //for testing
+            //System.out.println(this);
             reduce();
         }
     }
@@ -116,7 +122,6 @@ public class Number {
         return getRightChild(node.right);
     }
 
-
     private Node getRightSibling(Node node) {
         if (node.parent == null) {
             return null;
@@ -134,8 +139,20 @@ public class Number {
         return getLeftChild(node.left);
     }
 
+    private void split(Node node) {
+        int leftValue = (int) Math.floor(node.value / 2d);
+        int rightValue = (int) Math.ceil(node.value / 2d);
 
+        node.left = new Node(node.depth + 1);
+        node.left.value = leftValue;
+        node.left.parent = node;
 
+        node.right = new Node(node.depth + 1);
+        node.right.value = rightValue;
+        node.right.parent = node;
+
+        node.value = -1;
+    }
 
     private void getDepth(Node node) {
         if (node ==  null) {
@@ -162,6 +179,9 @@ public class Number {
         if (node.value != -1) {
             if (node.value > maxValue) {
                 this.maxValue = node.value;
+                if (node.value > 9 && splittingNode == null) {
+                    splittingNode = node;
+                }
             }
         }
 

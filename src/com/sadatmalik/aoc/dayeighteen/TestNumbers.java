@@ -9,10 +9,15 @@ public class TestNumbers {
     }
 
     private static void testReduce() {
+        //explode
         reduce("[[[[[9,8],1],2],3],4]");
         reduce("[7,[6,[5,[4,[3,2]]]]]");
         reduce("[[6,[5,[4,[3,2]]]],1]");
         reduce("[[3,[2,[1,[7,3]]]],[6,[5,[4,[3,2]]]]]");
+
+        //split
+        reduce("[[[[[4,3],4],4],[7,[[8,4],9]]],[1,1]]");
+        // [[[[[4,3],4],4],[7,[[8,4],9]]],[1,1]]
     }
 
     private static void reduce(String number) {
