@@ -211,8 +211,11 @@ public class Number {
         return sb.toString();
     }
 
-    //exposed for testing
-    int magnitude(Node node) {
+    int magnitude() {
+            return magnitude(this.root);
+    }
+
+    private int magnitude(Node node) {
         if (node.value != -1) {
             return node.value;
         }

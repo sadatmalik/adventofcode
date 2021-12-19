@@ -1,9 +1,5 @@
 package com.sadatmalik.aoc.dayeighteen;
 
-import com.sadatmalik.aoc.FileReader;
-
-import java.util.List;
-
 public class TestNumbers {
 
     public static void main(String[] args) {
@@ -45,24 +41,14 @@ public class TestNumbers {
     }
 
     private static void testUsingFileData() {
-        List<String> data = FileReader.getDataFromFile("data/dayeighteen/testdata.txt");
-        Number number = new Number(data.get(0));
-        System.out.println(number);
-        for (int i = 1; i < data.size(); i++) {
-            number.add(new Number(data.get(i)));
-            System.out.println(number);
-        }
-
+        Homework.partOne("data/dayeighteen/testdata.txt");
         System.out.println();
 
         // with sample homework
-        data = FileReader.getDataFromFile("data/dayeighteen/testdata2.txt");
-        number = new Number(data.get(0));
-        System.out.println(number);
-        for (int i = 1; i < data.size(); i++) {
-            number.add(new Number(data.get(i)));
-            System.out.println(number);
-        }
+        Homework.partOne("data/dayeighteen/testdata2.txt");
+        System.out.println();
+
+        Homework.partTwo("data/dayeighteen/testdata2.txt");
     }
 
     private static void testAddition() {
