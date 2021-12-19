@@ -1,11 +1,26 @@
 package com.sadatmalik.aoc.dayeighteen;
 
+import com.sadatmalik.aoc.FileReader;
+
+import java.util.List;
+
 public class TestNumbers {
 
     public static void main(String[] args) {
         //testNumberPopulation();
         //testReduce();
-        testAddition();
+        //testAddition();
+        testUsingFileData();
+    }
+
+    private static void testUsingFileData() {
+        List<String> data = FileReader.getDataFromFile("data/daynineteen/testdata.txt");
+        Number number = new Number(data.get(0));
+        System.out.println(number);
+        for (int i = 1; i < data.size(); i++) {
+            number.add(new Number(data.get(i)));
+            System.out.println(number);
+        }
     }
 
     private static void testAddition() {
