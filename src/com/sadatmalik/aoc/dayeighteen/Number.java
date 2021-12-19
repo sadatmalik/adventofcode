@@ -8,15 +8,15 @@ public class Number {
     private Node explodingNode;
     private Node splittingNode;
 
-    StringBuffer sb;
+    private StringBuffer sb;
 
-    Number(String number) {
+    public Number(String number) {
         root = new Node();
         int depth = 0;
         populate(root, number, depth);
     }
 
-    void populate(Node node, String number, int depth) {
+    private void populate(Node node, String number, int depth) {
         if (number.length() == 1) { // ignore last "]"
             return;
         }
@@ -51,7 +51,7 @@ public class Number {
         }
     }
 
-    Number add(Number number) {
+    public Number add(Number number) {
         Node newRoot = new Node();
 
         newRoot.left = this.root;
@@ -207,7 +207,16 @@ public class Number {
      public String toString() {
         sb = new StringBuffer();
         print(root);
+        sb.append(" (" + magnitude(root)+ ")");
         return sb.toString();
+    }
+
+    //exposed for testing
+    int magnitude(Node node) {
+        if (node.value != -1) {
+            return node.value;
+        }
+        return ((3 * magnitude(node.left)) + (2 * magnitude(node.right)));
     }
 
     private void print(Node node) {

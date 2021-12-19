@@ -10,12 +10,54 @@ public class TestNumbers {
         //testNumberPopulation();
         //testReduce();
         //testAddition();
+        //testMagnitude();
         testUsingFileData();
     }
 
+    private static void testMagnitude() {
+        //[9,1] becomes 29
+        Number test = new Number("[9,1]");
+        System.out.println(test);
+
+        //[[1,2],[[3,4],5]] becomes 143.
+        test = new Number("[[1,2],[[3,4],5]]");
+        System.out.println(test);
+
+        //[[[[0,7],4],[[7,8],[6,0]]],[8,1]] becomes 1384.
+        test = new Number("[[[[0,7],4],[[7,8],[6,0]]],[8,1]]");
+        System.out.println(test);
+
+        //[[[[1,1],[2,2]],[3,3]],[4,4]] becomes 445.
+        test = new Number("[[[[1,1],[2,2]],[3,3]],[4,4]]");
+        System.out.println(test);
+
+        //[[[[3,0],[5,3]],[4,4]],[5,5]] becomes 791.
+        test = new Number("[[[[3,0],[5,3]],[4,4]],[5,5]]");
+        System.out.println(test);
+
+        //[[[[5,0],[7,4]],[5,5]],[6,6]] becomes 1137.
+        test = new Number("[[[[5,0],[7,4]],[5,5]],[6,6]]");
+        System.out.println(test);
+
+        //[[[[8,7],[7,7]],[[8,6],[7,7]]],[[[0,7],[6,6]],[8,7]]] becomes 3488.
+        test = new Number("[[[[8,7],[7,7]],[[8,6],[7,7]]],[[[0,7],[6,6]],[8,7]]]");
+        System.out.println(test);
+    }
+
     private static void testUsingFileData() {
-        List<String> data = FileReader.getDataFromFile("data/daynineteen/testdata.txt");
+        List<String> data = FileReader.getDataFromFile("data/dayeighteen/testdata.txt");
         Number number = new Number(data.get(0));
+        System.out.println(number);
+        for (int i = 1; i < data.size(); i++) {
+            number.add(new Number(data.get(i)));
+            System.out.println(number);
+        }
+
+        System.out.println();
+
+        // with sample homework
+        data = FileReader.getDataFromFile("data/dayeighteen/testdata2.txt");
+        number = new Number(data.get(0));
         System.out.println(number);
         for (int i = 1; i < data.size(); i++) {
             number.add(new Number(data.get(i)));
