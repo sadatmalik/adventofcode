@@ -53,8 +53,12 @@ public class Number {
 
     Number add(Number number) {
         Node newRoot = new Node();
+
         newRoot.left = this.root;
+        newRoot.left.parent = newRoot;
+
         newRoot.right = number.root;
+        newRoot.right.parent = newRoot;
 
         resize(newRoot.left);
         resize(newRoot.right);
