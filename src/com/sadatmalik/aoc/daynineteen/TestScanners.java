@@ -40,6 +40,7 @@ public class TestScanners {
     }
 
     private static void testUniqueBacons() {
+        Beacon.collectUniqueBeacons(Scanner.normalisedScanners);
     }
 
 }
