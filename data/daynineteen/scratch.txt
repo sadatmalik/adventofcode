@@ -1,3 +1,73 @@
+Almost there!
+
+--- scanner 1 --- relative to --- scanner 0 --- is: 68,-1246,-43  n(-68,-1246,43)
+--- scanner 0 --- relative to --- scanner 1 --- is: 68,1246,-43  n(-68,1246,43)
+
+--- scanner 3 --- relative to --- scanner 1 --- is: 160,-1134,-23  n(160,-1134,-23)
+
+--- scanner 4 --- relative to --- scanner 1 --- is: 88,113,-1104  n(113,1104,-88)
+
+--- scanner 4 --- relative to --- scanner 2 --- is: 1125,-168,72  n(-168,1125,-72)
+
+--- scanner 1 --- relative to --- scanner 3 --- is: -160,1134,23  n(-160,1134,23)
+
+--- scanner 1 --- relative to --- scanner 4 --- is: -1104,-88,113  n(-113,-1104,88)
+
+--- scanner 2 --- relative to --- scanner 4 --- is: 168,-1125,72  n(-1125,168,-72)
+
+
+
+
+
+
+
+
+
+
+--- scanner 0 --- position: 0,0,0
+--- scanner 1 --- position: 68,-1246,-43
+--- scanner 2 --- position: null
+--- scanner 3 --- position: -92,-2380,-20
+--- scanner 4 --- position: -20,-1133,1061
+
+--- scanner 1 --- relative to --- scanner 0 --- is: 68,-1246,-43  n(-68,-1246,43)
+--- scanner 0 --- relative to --- scanner 1 --- is: 0,0,0  n(0,0,0)
+
+--- scanner 3 --- relative to --- scanner 1 --- is: -92,-2380,-20  n(92,-2380,20)
+--- scanner 1 --- relative to --- scanner 3 --- is: 0,0,0  n(0,0,0)
+
+--- scanner 4 --- relative to --- scanner 1 --- is: -20,-1133,1061  n(1133,-1061,-20)
+--- scanner 1 --- relative to --- scanner 4 --- is: 1105,-1229,1205  n(-1105,1205,-1229)
+
+--- scanner 4 --- relative to --- scanner 2 --- is: 1105,-1229,1205  n(-1105,1205,-1229)
+--- scanner 2 --- relative to --- scanner 4 --- is: 0,0,0  n(0,0,0)
+
+
+
+
+
+
+
+
+
+
+
+
+
+--- scanner 1 --- relative to --- scanner 0 --- is: 68,-1246,-43  n(-68,-1246,43)
+--- scanner 0 --- relative to --- scanner 1 --- is: 0,0,0  n(0,0,0)
+
+--- scanner 2 --- relative to --- scanner 4 --- is: 0,0,0  n(0,0,0)
+--- scanner 4 --- relative to --- scanner 2 --- is: 1105,-1229,1205  n(-1105,1205,-1229)
+
+--- scanner 3 --- relative to --- scanner 1 --- is: -92,-2380,-20  n(92,-2380,20)
+--- scanner 1 --- relative to --- scanner 3 --- is: 0,0,0  n(0,0,0)
+
+--- scanner 4 --- relative to --- scanner 1 --- is: -20,-1133,1061  n(1133,-1061,-20)
+--- scanner 1 --- relative to --- scanner 4 --- is: 1105,-1229,1205  n(-1105,1205,-1229)
+
+
+
 --- scanner 1 ---: [
 686,422,578,
 605,423,415,

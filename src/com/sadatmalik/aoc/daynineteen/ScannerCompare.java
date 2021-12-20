@@ -26,26 +26,28 @@ public class ScannerCompare {
         // cycle through every possible orientation pattern
         for (Orientation or : Orientation.values()) {
             for (Beacon bBeacon : scannerB.beacons) {
-                //Position bPos = normalise(bBeacon.pos, or);
-                Position bPos = bBeacon.pos; // normalise to forward_up
+                Position bPos = bBeacon.pos;
+                Position normalisedBPos = or.normalise(bPos); // normalise to forward_up
 
                 for (Beacon aBeacon : scannerA.beacons) { // find diff between bPos and every aPos
                     Position aPos = aBeacon.pos;
-                    Position diff = difference(aPos, bPos);
+                    Position diff = difference(aPos, normalisedBPos);
 
-                    int matches = findBeaconMatches(diff); // find matches between testing every bPos shifted by diff against every aPos
+                    int matches = findBeaconMatches(diff, or); // find matches between testing every bPos shifted by diff against every aPos
 
                     if (matches >= seekCount) {
                         // this means the scanners have aligned therefore reset scanner relative to base
-                        setAbsScannerPosition(scannerB, diff);
+                        System.out.println(scannerB.name + " is " + or);
+                        Position nDiff = or.normalise(diff);
 
-                        // insert unique beacons
-                        for (Beacon b : scannerB.beacons) {
-                            uniqueBeaconsByPosition.put(b.pos, b);
+                        System.out.println(scannerB.name + " relative to " + scannerA.name + " is: " + diff + "  n(" + nDiff + ")");
+
+                        // normalise and collect normalised scanners
+                        if (!(Scanner.normalisedScanners.contains(scannerB))) {
+                            setAbsScannerPosition(scannerB, diff, or);
+                            Scanner.normalisedScanners.add(scannerB);
                         }
                     }
-                    //System.out.println("Comparing " + scannerA.name + " and " + scannerB.name + "matched = " + matches);
-
                     if (matches >= seekCount) {
                         return;
                     }
@@ -54,21 +56,25 @@ public class ScannerCompare {
         }
     }
 
-    private static void setAbsScannerPosition(Scanner scannerB, Position diff) {
+    private static void setAbsScannerPosition(Scanner scannerB, Position diff, Orientation or) {
         scannerB.pos = diff;
         for (Beacon b : scannerB.beacons) {
-            b.pos.x = b.pos.x + diff.x;
-            b.pos.y = b.pos.y + diff.y;
-            b.pos.z = b.pos.z + diff.z;
+            Position normalised = or.normalise(b.pos);
+            normalised.x = normalised.x + diff.x;
+            normalised.y = normalised.y + diff.y;
+            normalised.z = normalised.z + diff.z;
+
+            b.pos = normalised;
         }
     }
 
-    private static int findBeaconMatches(Position diff) {
+    private static int findBeaconMatches(Position diff, Orientation or) {
         matchedBeacons = new ArrayList<>(); // reset matches
         int aligned = 0;
 
         for (Beacon bbBeacon : scannerB.beacons) {
-            Position possMatch = applyDifference(bbBeacon.pos, diff); // translate bPos by diff
+            Position normalised = or.normalise(bbBeacon.pos);
+            Position possMatch = applyDifference(normalised, diff); // translate bPos by diff
 
             for (Beacon aaBeacon : scannerA.beacons) {
                 if (isMatch(aaBeacon.pos, possMatch)) { // test translated bPos against every aPos

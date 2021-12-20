@@ -14,6 +14,7 @@ public class TestScanners {
 
         testLoadScanners("data/daynineteen/testdata.txt");
         testScannerMatch(12);
+        testUniqueBacons();
     }
 
     private static void testLoadScanners(String filename) {
@@ -26,26 +27,19 @@ public class TestScanners {
         Set<Scanner> checked = new HashSet<>();
         for (Scanner s1 : scanners) {
             for (Scanner s2 : scanners) {
-                if (s1 != s2 && !(checked.contains(s2))) {
+                //if (s1 != s2 && !(checked.contains(s2))) {
+                if (s1 != s2) {
                     int matches = ScannerCompare.match(s1, s2, seeking);
-//                    if (matches == 0) {
-//                        System.out.println("Matched beacons for " + s1.name + " and " + s2.name +
-//                                " = " + matches);
-//                    } else {
-//                        System.out.println("Matched beacons for " + s1.name + " and " + s2.name +
-//                                " = " + matches + ": " + ScannerCompare.matchedBeacons);
-//                    }
-
-                    if (matches >= 12) {
-                        System.out.println("Matched beacons for " + s1.name + " and " + s2.name +
-                                " = " + matches + ": " + ScannerCompare.matchedBeacons);
-
-                        System.out.println("Unique beacons found = "
-                                + ScannerCompare.uniqueBeaconsByPosition.size());
-                    }
                 }
             }
             checked.add(s1);
         }
+        for (Scanner s : scanners) {
+            System.out.println(s.name + " position: " + s.pos);
+        }
     }
+
+    private static void testUniqueBacons() {
+    }
+
 }

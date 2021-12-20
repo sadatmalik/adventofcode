@@ -12,6 +12,7 @@ public class Scanner {
     List<Beacon> beacons;
 
     static final List<Scanner> scanners = new ArrayList<>(); // all scanners
+    static final List<Scanner> normalisedScanners = new ArrayList<>(); // collect reoriented fwd_up scanners
 
     Scanner(String name) {
         this.name = name;
