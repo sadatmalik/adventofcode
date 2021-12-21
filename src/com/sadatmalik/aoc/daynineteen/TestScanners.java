@@ -1,8 +1,7 @@
 package com.sadatmalik.aoc.daynineteen;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
 
 public class TestScanners {
 
@@ -12,7 +11,11 @@ public class TestScanners {
 //        testLoadScanners("data/daynineteen/sampledata.txt");
 //        testScannerMatch(3);
 
-        testLoadScanners("data/daynineteen/testdata.txt");
+//        testLoadScanners("data/daynineteen/testdata.txt");
+//        testScannerMatch(12);
+//        testUniqueBacons();
+
+        testLoadScanners("data/daynineteen/puzzledata.txt");
         testScannerMatch(12);
         testUniqueBacons();
     }
@@ -24,18 +27,33 @@ public class TestScanners {
     }
 
     private static void testScannerMatch(int seeking) {
-        Set<Scanner> checked = new HashSet<>();
-        for (Scanner s1 : scanners) {
-            for (Scanner s2 : scanners) {
-                //if (s1 != s2 && !(checked.contains(s2))) {
-                if (s1 != s2) {
-                    int matches = ScannerCompare.match(s1, s2, seeking);
+
+        List<Scanner> notNormalised = Scanner.notNormalisedScanners;
+        List<Scanner> normalised = Scanner.normalisedScanners;
+
+        int i = 0;
+        while(Scanner.notNormalisedScanners.size() > 1) {
+            System.out.println("Pass number #" + i++);
+            for (Scanner s1 : scanners) {
+                for (Scanner s2 : scanners) {
+                    if (s1 != s2) {
+                        int matches = ScannerCompare.match(s1, s2, seeking);
+                    }
                 }
             }
-            checked.add(s1);
-        }
-        for (Scanner s : scanners) {
-            System.out.println(s.name + " position: " + s.pos);
+
+
+            for (Scanner s : scanners) {
+                System.out.print(s.name + " is related to ");
+                for (Map.Entry<Scanner, Translation> rel : s.relatives.entrySet()) {
+                    System.out.print(rel.getKey().name + " ");
+                    System.out.print("[" + rel.getValue().pos + ", " + rel.getValue().or + "]");
+                }
+                System.out.println();
+            }
+            for (Scanner s : scanners) {
+                System.out.println(s.name + " position: " + s.pos);
+            }
         }
     }
 

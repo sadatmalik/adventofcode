@@ -15,6 +15,8 @@ public class ScannerCompare {
 
     static final Map<Position, Beacon> uniqueBeaconsByPosition = new HashMap<>();
 
+    static final Map<Scanner, List<Scanner>> waitingOn = new HashMap<>();
+
     // return number of matched beacons
     static int match(Scanner a, Scanner b, int seekCount) {
         initialize(a, b, seekCount);
@@ -33,24 +35,26 @@ public class ScannerCompare {
                     Position aPos = aBeacon.pos;
                     Position diff = difference(aPos, normalisedBPos);
 
-                    int matches = findBeaconMatches(diff, or); // find matches between testing every bPos shifted by diff against every aPos
+                    int matches = findBeaconMatches(diff, or); // find matches by testing every bPos shifted by diff against every aPos
 
                     if (matches >= seekCount) {
-                        // this means the scanners have aligned therefore reset scanner relative to base
-                        System.out.println(scannerB.name + " is " + or);
-                        Position nDiff = or.normalise(diff);
-
-                        System.out.println(scannerB.name + " relative to " + scannerA.name + " is: " + diff + "  n(" + nDiff + ")");
+                        //System.out.println(scannerB.name + " relative to " + scannerA.name + " is: " + diff);
+                        scannerB.addRelative(scannerA, diff, or);
 
                         // normalise and collect normalised scanners
-                        if (!(Scanner.normalisedScanners.contains(scannerB))) {
+                        // only proceed if relative scanner been already normalised (i.e. A)
+                        if (!(Scanner.normalisedScanners.contains(scannerB)) &&
+                            Scanner.normalisedScanners.contains(scannerA)) {
+
                             setAbsScannerPosition(scannerB, diff, or);
+
                             Scanner.normalisedScanners.add(scannerB);
+                            Scanner.notNormalisedScanners.remove(scannerB);
                         }
                     }
-                    if (matches >= seekCount) {
-                        return;
-                    }
+//                    if (matches >= seekCount) {
+//                        return;
+//                    }
                 }
             }
         }
@@ -66,6 +70,7 @@ public class ScannerCompare {
 
             b.pos = normalised;
         }
+        System.out.println("Normalised: " + scannerB.name);
     }
 
     private static int findBeaconMatches(Position diff, Orientation or) {

@@ -3,24 +3,33 @@ package com.sadatmalik.aoc.daynineteen;
 import com.sadatmalik.aoc.FileReader;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Scanner {
     String name;
     Orientation orientation;
     Position pos;
     List<Beacon> beacons;
+    Map<Scanner, Translation> relatives; // all matching scanners
 
     static final List<Scanner> scanners = new ArrayList<>(); // all scanners
     static final List<Scanner> normalisedScanners = new ArrayList<>(); // collect reoriented fwd_up scanners
+    static final List<Scanner> notNormalisedScanners = new ArrayList<>();
 
     Scanner(String name) {
         this.name = name;
         this.beacons = new ArrayList<>();
+        relatives = new HashMap<>();
     }
 
     void addBeacon(Beacon beacon) {
         beacons.add(beacon);
+    }
+
+    void addRelative(Scanner relative, Position diffToRelative, Orientation or) {
+        relatives.put(relative, new Translation(diffToRelative, or));
     }
 
     public static void loadScanners(String filename) {
@@ -32,7 +41,7 @@ public class Scanner {
             }
 
             if (line.startsWith("---")) {
-                scanner = new Scanner(line);
+                scanner = new Scanner(line.replaceAll("scanner ", ""));
                 scanners.add(scanner);
             } else {
                 String[] coordinates = line.split(",");
@@ -48,6 +57,8 @@ public class Scanner {
         Scanner base = scanners.get(0);
         base.orientation = Orientation.FORWARD_UP;
         base.pos = new Position(0,0,0);
+        normalisedScanners.add(base);
+        notNormalisedScanners.addAll(scanners);
     }
 
     public static void printAll() {
