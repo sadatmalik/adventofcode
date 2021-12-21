@@ -1,4 +1,4 @@
-package com.sadatmalik.aoc.daytwenty.attemptone;
+package com.sadatmalik.aoc.daytwenty;
 
 import com.sadatmalik.aoc.FileReader;
 
@@ -10,18 +10,18 @@ public class TrenchMap {
     private static String[][] input;
 
     public static void main(String[] args) {
-//        loadInputs("data/daytwenty/testdata.txt");
-        loadInputs("data/daytwenty/puzzledata.txt");
-        Print.printImage(input);
+        loadInputs("data/daytwenty/testdata.txt");
+        //loadInputs("data/daytwenty/puzzledata.txt");
+        com.sadatmalik.aoc.daytwenty.Print.printImage(input);
         enhanceImage(2);
     }
 
-    private static void enhanceImage(int i) {
-        String[][] out = ImageEnhancer.enhance(input, imageAlgo);
-        out = ImageEnhancer.enhance(out, imageAlgo);
-
-        int lit = getLitCount(out);
-        System.out.println("Lit pixesl = " + lit);
+    private static void enhanceImage(int count) {
+        for (int i = 0; i < count; i++) {
+            input = ImageEnhancer.enhance(input, imageAlgo);
+        }
+        int lit = getLitCount(input);
+        System.out.println("Lit pixels = " + lit);
     }
 
     private static int getLitCount(String[][] out) {

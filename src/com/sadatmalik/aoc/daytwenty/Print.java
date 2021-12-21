@@ -1,4 +1,4 @@
-package com.sadatmalik.aoc.daytwenty.attemptone;
+package com.sadatmalik.aoc.daytwenty;
 
 public class Print {
 

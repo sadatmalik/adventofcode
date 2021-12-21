@@ -1,0 +1,60 @@
+package com.sadatmalik.aoc.daytwenty;
+
+import com.sadatmalik.aoc.FileReader;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+public class TrenchMap {
+
+    private static String imageAlgo;
+    private static Set<Pixel> litPixels;
+
+    static int startX = 5;
+    static int startY = 5;
+
+    static int canvasX = 20;
+    static int canvasY = 20;
+
+    public static void main(String[] args) {
+        loadInputs("data/daytwenty/testdata.txt");
+        printPixels();
+//        loadInputs("data/daytwenty/puzzledata.txt");
+//        Print.printImage(input);
+//        enhanceImage(2);
+    }
+
+    private static void loadInputs(String filename) {
+        List<String> data = FileReader.getDataFromFile(filename);
+        System.out.println(data);
+
+        imageAlgo = data.get(0);
+        litPixels = new HashSet<>();
+
+        for (int i = 2; i < data.size(); i++) {
+            String line = data.get(i);
+            int x = startX;
+            for (String s : line.split("")) {
+                if ("#".equals(s)) {
+                    litPixels.add(new Pixel(x++, startY));
+                }
+                x++;
+            }
+            startY++;
+        }
+    }
+
+    private static void printPixels() {
+        for (int y = 0; y < canvasY; y++) {
+            for (int x = 0; x < canvasX; x++) {
+                if (litPixels.contains(new Pixel(x,y))) {
+                    System.out.print("#");
+                } else {
+                    System.out.print(".");
+                }
+            }
+            System.out.println();
+        }
+    }
+}
