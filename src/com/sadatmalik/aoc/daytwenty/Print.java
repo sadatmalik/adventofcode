@@ -9,7 +9,7 @@ public class Print {
 
         for (int y = 0; y < image_y; y++) {
             for (int x = 0; x < image_x; x++) {
-                System.out.print(image[x][y] + " ");
+                System.out.print(image[x][y] + "");
             }
             System.out.println();
         }

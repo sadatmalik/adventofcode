@@ -12,7 +12,7 @@ public class TrenchMap {
     public static void main(String[] args) {
         //loadInputs("data/daytwenty/testdata.txt");
         loadInputs("data/daytwenty/puzzledata.txt");
-        Print.printImage(input);
+
         enhanceImage(50);
     }
 
