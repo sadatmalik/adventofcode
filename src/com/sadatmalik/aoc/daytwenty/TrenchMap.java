@@ -10,10 +10,10 @@ public class TrenchMap {
     private static String[][] input;
 
     public static void main(String[] args) {
-        loadInputs("data/daytwenty/testdata.txt");
-        //loadInputs("data/daytwenty/puzzledata.txt");
-        com.sadatmalik.aoc.daytwenty.Print.printImage(input);
-        enhanceImage(2);
+        //loadInputs("data/daytwenty/testdata.txt");
+        loadInputs("data/daytwenty/puzzledata.txt");
+        Print.printImage(input);
+        enhanceImage(50);
     }
 
     private static void enhanceImage(int count) {
@@ -59,8 +59,5 @@ public class TrenchMap {
         }
 
     }
-
-
-
 
 }

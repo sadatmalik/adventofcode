@@ -11,7 +11,7 @@ public class ImageEnhancer {
         algo = imageAlgo;
 
         String[][] out = render();
-        com.sadatmalik.aoc.daytwenty.Print.printImage(out);
+        Print.printImage(out);
 
         return out;
     }
