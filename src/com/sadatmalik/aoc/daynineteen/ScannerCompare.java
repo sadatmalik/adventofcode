@@ -50,11 +50,9 @@ public class ScannerCompare {
 
                             Scanner.normalisedScanners.add(scannerB);
                             Scanner.notNormalisedScanners.remove(scannerB);
+                            return;
                         }
                     }
-//                    if (matches >= seekCount) {
-//                        return;
-//                    }
                 }
             }
         }

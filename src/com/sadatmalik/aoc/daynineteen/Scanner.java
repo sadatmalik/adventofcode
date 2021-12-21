@@ -24,6 +24,24 @@ public class Scanner {
         relatives = new HashMap<>();
     }
 
+    public static int getGreatestManhattanDistance() {
+        int distance = 0;
+        for (Scanner a : normalisedScanners) {
+            for (Scanner b: normalisedScanners) {
+                Position aPos = a.pos;
+                Position bPos = b.pos;
+
+                int dist = Math.abs(aPos.x - bPos.x) +
+                        Math.abs(aPos.y - bPos.y) +
+                        Math.abs(aPos.z - bPos.z);
+
+                if (dist > distance)
+                    distance = dist;
+            }
+        }
+        return distance;
+    }
+
     void addBeacon(Beacon beacon) {
         beacons.add(beacon);
     }

@@ -25,7 +25,7 @@ public class Beacon {
                 }
             }
         }
-        System.out.println("Total unique beacons = " + allBeacons.size());
+        System.out.println("\nTotal unique beacons = " + allBeacons.size());
     }
 
     @Override
