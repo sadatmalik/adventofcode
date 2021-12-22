@@ -22,10 +22,11 @@ public class ReactorReboot {
         //loadRebootData("data/daytwentytwo/testdata.txt");
         //loadRebootData("data/daytwentytwo/testdata2.txt");
         //loadRebootData("data/daytwentytwo/puzzledata.txt");
+        //runInstructions();
 
         //part 2
-        loadRebootData("data/daytwentytwo/testdata.txt");
-        print(instructions);
+        loadRebootData("data/daytwentytwo/testdata2.txt");
+        //print(instructions);
         runInstructions2();
     }
 
