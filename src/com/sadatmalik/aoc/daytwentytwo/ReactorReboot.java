@@ -10,16 +10,98 @@ import java.util.Set;
 public class ReactorReboot {
 
     static List<Instruction> instructions = new ArrayList<>();
-    static Set<Cuboid> on = new HashSet<>();
+    static Set<CubicPoint> on = new HashSet<>();
     static ReactorGrid reactor;
 
+    static Set<Cuboid> litCuboids = new HashSet<>();
+
     public static void main(String[] args) {
-        setReactorDimensions(-50, 50, -50, 50, -50, 50);
+
+        //part 1
+        //setReactorDimensions(-50, 50, -50, 50, -50, 50);
         //loadRebootData("data/daytwentytwo/testdata.txt");
         //loadRebootData("data/daytwentytwo/testdata2.txt");
-        loadRebootData("data/daytwentytwo/puzzledata.txt");
+        //loadRebootData("data/daytwentytwo/puzzledata.txt");
+
+        //part 2
+        loadRebootData("data/daytwentytwo/testdata.txt");
         print(instructions);
-        runInstructions();
+        runInstructions2();
+    }
+
+    private static void runInstructions2() {
+        int step = 1;
+        for (Instruction i : instructions) {
+            execution2(i);
+            long lit = getLitCubaloids();
+            System.out.println("Large cuboids in set after step " + step + " = " + litCuboids.size() +
+                    ", total lit cubaloids = " + lit);
+            step++;
+        }
+    }
+
+    private static long getLitCubaloids() {
+        long totalVol = 0;
+        for (Cuboid cuboid : litCuboids) {
+            totalVol += cuboid.volume();
+        }
+        return totalVol;
+    }
+
+    private static void execution2(Instruction i) {
+        Cuboid cuboid = new Cuboid(i.xStart, i.xEnd, i.yStart, i.yEnd, i.zStart, i.zEnd);
+        addCuboid(i.turnOn, cuboid);
+    }
+
+    private static void addCuboid(boolean turnOn, Cuboid c) {
+        // todo - look for an exact match case
+
+        // look for an overlap against existing lit cuboids
+        List<Cuboid> addList = new ArrayList<>();
+        List<Cuboid> removeList = new ArrayList<>();
+        boolean foundOverlap = false;
+        for (Cuboid lit : litCuboids) {
+            Cuboid overlap = c.overlaps(lit);
+            if (overlap == null) {
+                continue;
+            } else {
+                foundOverlap = true;
+                // need to split and add
+                if (!turnOn) {
+                    // split lit
+                    List<Cuboid> split = lit.split(overlap);
+                    for (Cuboid cs : split) {
+                        addList.add(cs);
+                    }
+                    removeList.add(lit);
+                } else {
+                    // split c
+                    List<Cuboid> split = c.split(overlap);
+                    for (Cuboid cs : split) {
+                        addCuboid(turnOn, cs);
+                    }
+                    return;
+                }
+            }
+        }
+        if (!foundOverlap) {
+            litCuboids.add(c);
+        }
+        for (Cuboid clr : removeList) {
+            litCuboids.remove(clr);
+        }
+        for (Cuboid cla : addList) {
+            litCuboids.add(cla);
+        }
+
+
+        // add first one
+        if (litCuboids.isEmpty()) {
+            if (turnOn) {
+                litCuboids.add(c);
+            }
+        }
+
     }
 
     private static void setReactorDimensions(int xMin, int xMax, int yMin, int yMax, int zMin, int zMax) {
@@ -37,21 +119,21 @@ public class ReactorReboot {
 
     private static void execution(Instruction instruction) {
         for (int z = instruction.zStart; z <= instruction.zEnd; z++) {
-            if (z < reactor.zMin || z > reactor.zMax)
+            if (reactor != null && (z < reactor.zMin || z > reactor.zMax))
                 return;
 
             for (int y = instruction.yStart; y <= instruction.yEnd; y++) {
-                if (y < reactor.yMin || y > reactor.yMax)
+                if (reactor != null && (y < reactor.yMin || y > reactor.yMax))
                     return;
 
                 for (int x = instruction.xStart; x <= instruction.xEnd; x++) {
-                    if (x < reactor.xMin || x > reactor.xMax)
+                    if (reactor != null && (x < reactor.xMin || x > reactor.xMax))
                         return;
 
                     if (instruction.turnOn) {
-                        on.add(new Cuboid(x, y, z));
+                        on.add(new CubicPoint(x, y, z));
                     } else {
-                        on.remove(new Cuboid(x, y, z));
+                        on.remove(new CubicPoint(x, y, z));
                     }
                 }
             }
