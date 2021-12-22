@@ -14,13 +14,19 @@ public class ReactorReboot {
     static ReactorGrid reactor;
 
     public static void main(String[] args) {
-        loadRebootData("data/daytwentytwo/testdata.txt");
+        setReactorDimensions(-50, 50, -50, 50, -50, 50);
+        //loadRebootData("data/daytwentytwo/testdata.txt");
+        //loadRebootData("data/daytwentytwo/testdata2.txt");
+        loadRebootData("data/daytwentytwo/puzzledata.txt");
         print(instructions);
-        runInstructions(-50, -50, -50, -50, -50, -50);
+        runInstructions();
     }
 
-    private static void runInstructions(int xMin, int xMax, int yMin, int yMax, int zMin, int zMax) {
+    private static void setReactorDimensions(int xMin, int xMax, int yMin, int yMax, int zMin, int zMax) {
         reactor = new ReactorGrid(xMin, xMax, yMin, yMax, zMin, zMax);
+    }
+
+    private static void runInstructions() {
         int step = 1;
         for (Instruction instruction : instructions) {
             execution(instruction);
@@ -31,8 +37,17 @@ public class ReactorReboot {
 
     private static void execution(Instruction instruction) {
         for (int z = instruction.zStart; z <= instruction.zEnd; z++) {
+            if (z < reactor.zMin || z > reactor.zMax)
+                return;
+
             for (int y = instruction.yStart; y <= instruction.yEnd; y++) {
+                if (y < reactor.yMin || y > reactor.yMax)
+                    return;
+
                 for (int x = instruction.xStart; x <= instruction.xEnd; x++) {
+                    if (x < reactor.xMin || x > reactor.xMax)
+                        return;
+
                     if (instruction.turnOn) {
                         on.add(new Cuboid(x, y, z));
                     } else {
