@@ -13,10 +13,9 @@ public class ReactorReboot {
     static Set<CubicPoint> on = new HashSet<>();
     static ReactorGrid reactor;
 
-    static Set<Cuboid> litCuboids = new HashSet<>();
+    static List<Cuboid> litCuboids = new ArrayList<>();
 
     public static void main(String[] args) {
-
         //part 1
         //setReactorDimensions(-50, 50, -50, 50, -50, 50);
         //loadRebootData("data/daytwentytwo/testdata.txt");
@@ -25,20 +24,20 @@ public class ReactorReboot {
         //runInstructions();
 
         //part 2
-        loadRebootData("data/daytwentytwo/testdata2.txt");
-        //print(instructions);
+        loadRebootData("data/daytwentytwo/puzzledata.txt");
         runInstructions2();
     }
 
     private static void runInstructions2() {
-        int step = 1;
+        int step = 0;
         for (Instruction i : instructions) {
             execution2(i);
-            long lit = getLitCubaloids();
-            System.out.println("Large cuboids in set after step " + step + " = " + litCuboids.size() +
-                    ", total lit cubaloids = " + lit);
+//            long lit = getLitCubaloids();
+//            System.out.println("Large cuboids in set after step " + step + " = " + litCuboids.size() +
+//                    ", total lit cubaloids = " + lit);
             step++;
         }
+        System.out.println("Total lit cubaloids after step " + step + " = " + getLitCubaloids());
     }
 
     private static long getLitCubaloids() {
@@ -54,8 +53,8 @@ public class ReactorReboot {
         addCuboid(i.turnOn, cuboid);
     }
 
+    // uses new Cuboid.splitAroundOverlap() to account for enclosed overlaps -SM 23/12/21
     private static void addCuboid(boolean turnOn, Cuboid c) {
-        // todo - look for an exact match case
 
         // look for an overlap against existing lit cuboids
         List<Cuboid> addList = new ArrayList<>();
@@ -70,14 +69,16 @@ public class ReactorReboot {
                 // need to split and add
                 if (!turnOn) {
                     // split lit
-                    List<Cuboid> split = lit.split(overlap);
+                    //List<Cuboid> split = lit.split(overlap);
+                    List<Cuboid> split = lit.splitAroundOverlap(overlap);
                     for (Cuboid cs : split) {
                         addList.add(cs);
                     }
                     removeList.add(lit);
                 } else {
                     // split c
-                    List<Cuboid> split = c.split(overlap);
+                    //List<Cuboid> split = c.split(overlap);
+                    List<Cuboid> split = c.splitAroundOverlap(overlap);
                     for (Cuboid cs : split) {
                         addCuboid(turnOn, cs);
                     }
@@ -85,7 +86,7 @@ public class ReactorReboot {
                 }
             }
         }
-        if (!foundOverlap) {
+        if (!foundOverlap && turnOn) {
             litCuboids.add(c);
         }
         for (Cuboid clr : removeList) {
@@ -95,14 +96,12 @@ public class ReactorReboot {
             litCuboids.add(cla);
         }
 
-
         // add first one
         if (litCuboids.isEmpty()) {
             if (turnOn) {
                 litCuboids.add(c);
             }
         }
-
     }
 
     private static void setReactorDimensions(int xMin, int xMax, int yMin, int yMax, int zMin, int zMax) {
