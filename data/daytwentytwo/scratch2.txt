@@ -1,0 +1,42 @@
+New cube insert: Cuboid{xMin=-27, xMax=23, yMin=-28, yMax=26, zMin=-21, zMax=29}
+
+Removing overlapping cube: Cuboid{xMin=2, xMax=28, yMin=23, yMax=23, zMin=17, zMax=28}
+Adding it's cube splits: Cuboid{xMin=24, xMax=28, yMin=23, yMax=23, zMin=17, zMax=28}
+
+Removing overlapping cube: Cuboid{xMin=2, xMax=7, yMin=-29, yMax=-23, zMin=-38, zMax=16}
+Adding it's cube splits: Cuboid{xMin=2, xMax=7, yMin=-29, yMax=-29, zMin=-38, zMax=16}
+Adding it's cube splits: Cuboid{xMin=2, xMax=7, yMin=-28, yMax=-23, zMin=-38, zMax=-22}
+
+Removing overlapping cube: Cuboid{xMin=8, xMax=28, yMin=23, yMax=23, zMin=-38, zMax=16}
+Adding it's cube splits: Cuboid{xMin=24, xMax=28, yMin=23, yMax=23, zMin=-38, zMax=16}
+Adding it's cube splits: Cuboid{xMin=8, xMax=23, yMin=23, yMax=23, zMin=-38, zMax=-22}
+
+Removing overlapping cube: Cuboid{xMin=-49, xMax=1, yMin=-3, yMax=46, zMin=-24, zMax=28}
+Adding it's cube splits: Cuboid{xMin=-49, xMax=-28, yMin=-3, yMax=46, zMin=-24, zMax=28}
+Adding it's cube splits: Cuboid{xMin=-27, xMax=1, yMin=27, yMax=46, zMin=-24, zMax=28}
+Adding it's cube splits: Cuboid{xMin=-27, xMax=1, yMin=-3, yMax=26, zMin=-24, zMax=-22}
+
+Removing overlapping cube: Cuboid{xMin=2, xMax=47, yMin=-22, yMax=22, zMin=-23, zMax=27}
+Adding it's cube splits: Cuboid{xMin=24, xMax=47, yMin=-22, yMax=22, zMin=-23, zMax=27}
+Adding it's cube splits: Cuboid{xMin=2, xMax=23, yMin=-22, yMax=22, zMin=-23, zMax=-22}
+
+Removing overlapping cube: Cuboid{xMin=-46, xMax=1, yMin=-6, yMax=-4, zMin=-50, zMax=-1}
+Adding it's cube splits: Cuboid{xMin=-46, xMax=-28, yMin=-6, yMax=-4, zMin=-50, zMax=-1}
+Adding it's cube splits: Cuboid{xMin=-27, xMax=1, yMin=-6, yMax=-4, zMin=-50, zMax=-22}
+
+Removing overlapping cube: Cuboid{xMin=2, xMax=7, yMin=23, yMax=46, zMin=-50, zMax=-1}
+Adding it's cube splits: Cuboid{xMin=2, xMax=7, yMin=27, yMax=46, zMin=-50, zMax=-1}
+Adding it's cube splits: Cuboid{xMin=2, xMax=7, yMin=23, yMax=26, zMin=-50, zMax=-22}
+
+Removing overlapping cube: Cuboid{xMin=2, xMax=28, yMin=-21, yMax=22, zMin=28, zMax=28}
+Adding it's cube splits: Cuboid{xMin=24, xMax=28, yMin=-21, yMax=22, zMin=28, zMax=28}
+
+Removing overlapping cube: Cuboid{xMin=-22, xMax=1, yMin=-29, yMax=-7, zMin=-38, zMax=16}
+Adding it's cube splits: Cuboid{xMin=-22, xMax=1, yMin=-29, yMax=-29, zMin=-38, zMax=16}
+Adding it's cube splits: Cuboid{xMin=-22, xMax=1, yMin=-28, yMax=-7, zMin=-38, zMax=-22}
+
+Removing overlapping cube: Cuboid{xMin=8, xMax=28, yMin=-29, yMax=-23, zMin=-38, zMax=16}
+Adding it's cube splits: Cuboid{xMin=24, xMax=28, yMin=-29, yMax=-23, zMin=-38, zMax=16}
+Adding it's cube splits: Cuboid{xMin=8, xMax=23, yMin=-29, yMax=-29, zMin=-38, zMax=16}
+Adding it's cube splits: Cuboid{xMin=8, xMax=23, yMin=-28, yMax=-23, zMin=-38, zMax=-22}
+

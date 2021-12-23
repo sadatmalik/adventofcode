@@ -6,6 +6,7 @@ Cuboids lit after step 3 = 225476
 Cuboids lit after step 4 = 328328
 Cuboids lit after step 5 = 387734
 Cuboids lit after step 6 = 420416
+
 Cuboids lit after step 7 = 436132
 Cuboids lit after step 8 = 478727
 Cuboids lit after step 9 = 494759
@@ -22,3 +23,84 @@ Cuboids lit after step 19 = 590029
 Cuboids lit after step 20 = 590784
 Cuboids lit after step 21 = 590784
 Cuboids lit after step 22 = 590784
+
+
+23/12 10:51:
+Large cuboids in set after step 6 = 47, total lit cubaloids = 420721
+Large cuboids in set after step 7 = 96, total lit cubaloids = 432049
+Large cuboids in set after step 8 = 145, total lit cubaloids = 470819
+Large cuboids in set after step 9 = 247, total lit cubaloids = 479511
+Large cuboids in set after step 10 = 268, total lit cubaloids = 479511
+Large cuboids in set after step 11 = 272, total lit cubaloids = 476871
+Large cuboids in set after step 12 = 289, total lit cubaloids = 501554
+Large cuboids in set after step 13 = 290, total lit cubaloids = 504733
+Large cuboids in set after step 14 = 297, total lit cubaloids = 511753
+Large cuboids in set after step 15 = 298, total lit cubaloids = 515724
+Large cuboids in set after step 16 = 317, total lit cubaloids = 540891
+Large cuboids in set after step 17 = 322, total lit cubaloids = 537571
+Large cuboids in set after step 18 = 368, total lit cubaloids = 543047
+Large cuboids in set after step 19 = 378, total lit cubaloids = 540174
+Large cuboids in set after step 20 = 446, total lit cubaloids = 543411
+Large cuboids in set after step 21 = 447, total lit cubaloids = 18719357628746
+Large cuboids in set after step 22 = 448, total lit cubaloids = 39769202310406
+
+
+
+
+
+
+
+
+
+
+
+
+Last run execution2()
+Large cuboids in set after step 1 = 1, total lit cubaloids = 139590
+Large cuboids in set after step 2 = 4, total lit cubaloids = 210918
+Large cuboids in set after step 3 = 14, total lit cubaloids = 225476
+Large cuboids in set after step 4 = 23, total lit cubaloids = 328328
+Large cuboids in set after step 5 = 38, total lit cubaloids = 387734
+
+Large cuboids in set after step 6 = 47, total lit cubaloids = 420721
+Large cuboids in set after step 7 = 96, total lit cubaloids = 432049
+Large cuboids in set after step 8 = 145, total lit cubaloids = 470819
+Large cuboids in set after step 9 = 255, total lit cubaloids = 479551
+Large cuboids in set after step 10 = 276, total lit cubaloids = 479551
+Large cuboids in set after step 11 = 278, total lit cubaloids = 464746
+Large cuboids in set after step 12 = 295, total lit cubaloids = 489429
+Large cuboids in set after step 13 = 296, total lit cubaloids = 492608
+Large cuboids in set after step 14 = 303, total lit cubaloids = 499628
+Large cuboids in set after step 15 = 304, total lit cubaloids = 503599
+Large cuboids in set after step 16 = 321, total lit cubaloids = 528766
+Large cuboids in set after step 17 = 325, total lit cubaloids = 522790
+Large cuboids in set after step 18 = 365, total lit cubaloids = 539667
+Large cuboids in set after step 19 = 371, total lit cubaloids = 528221
+Large cuboids in set after step 20 = 454, total lit cubaloids = 534445
+Large cuboids in set after step 21 = 455, total lit cubaloids = 18719357619780
+Large cuboids in set after step 22 = 456, total lit cubaloids = 39769202301440
+
+
+Last run execution2()
+Large cuboids in set after step 1 = 1, total lit cubaloids = 139590
+Large cuboids in set after step 2 = 4, total lit cubaloids = 210918
+Large cuboids in set after step 3 = 15, total lit cubaloids = 223804
+Large cuboids in set after step 4 = 20, total lit cubaloids = 326656
+Large cuboids in set after step 5 = 33, total lit cubaloids = 386062
+Large cuboids in set after step 6 = 42, total lit cubaloids = 388408
+Large cuboids in set after step 7 = 69, total lit cubaloids = 399150
+Large cuboids in set after step 8 = 114, total lit cubaloids = 416518
+Large cuboids in set after step 9 = 165, total lit cubaloids = 436791
+Large cuboids in set after step 10 = 184, total lit cubaloids = 437637
+Large cuboids in set after step 11 = 186, total lit cubaloids = 422832
+Large cuboids in set after step 12 = 215, total lit cubaloids = 465956
+Large cuboids in set after step 13 = 216, total lit cubaloids = 469135
+Large cuboids in set after step 14 = 243, total lit cubaloids = 476155
+Large cuboids in set after step 15 = 244, total lit cubaloids = 480126
+Large cuboids in set after step 16 = 259, total lit cubaloids = 508421
+Large cuboids in set after step 17 = 263, total lit cubaloids = 502445
+Large cuboids in set after step 18 = 300, total lit cubaloids = 518531
+Large cuboids in set after step 19 = 306, total lit cubaloids = 507085
+Large cuboids in set after step 20 = 371, total lit cubaloids = 509810
+Large cuboids in set after step 21 = 372, total lit cubaloids = 18719357595145
+Large cuboids in set after step 22 = 373, total lit cubaloids = 39769202276805
