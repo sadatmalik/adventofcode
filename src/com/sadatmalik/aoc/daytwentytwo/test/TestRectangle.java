@@ -1,4 +1,6 @@
-package com.sadatmalik.aoc.daytwentytwo;
+package com.sadatmalik.aoc.daytwentytwo.test;
+
+import com.sadatmalik.aoc.daytwentytwo.Rectangle;
 
 public class TestRectangle {
 
