@@ -1,4 +1,4 @@
-package com.sadatmalik.aoc.daytwentytwo;
+package com.sadatmalik.aoc.daytwentytwo.twodimensions;
 
 
 // test logic with 2D to start with

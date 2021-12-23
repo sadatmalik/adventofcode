@@ -1,4 +1,4 @@
-package com.sadatmalik.aoc.daytwentytwo;
+package com.sadatmalik.aoc.daytwentytwo.twodimensions;
 
 public class Point {
     int x;
