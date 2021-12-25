@@ -13,7 +13,7 @@ public class Amphipods {
     static List<Integer> finalScores = new ArrayList<>();
 
     static Map<Integer, String> amphipods = new HashMap<>();
-    static Map<Integer, Integer> rooms = new HashMap<>();
+    static Map<Integer, Integer> roomsByAmphipod = new HashMap<>();
 
     static {
         amphipods.put(1, "A");
@@ -22,10 +22,10 @@ public class Amphipods {
         amphipods.put(1000, "D");
         amphipods.put(0, ".");
 
-        rooms.put(1, 1);
-        rooms.put(10, 2);
-        rooms.put(100, 3);
-        rooms.put(1000, 4);
+        roomsByAmphipod.put(1, 1);
+        roomsByAmphipod.put(10, 2);
+        roomsByAmphipod.put(100, 3);
+        roomsByAmphipod.put(1000, 4);
     }
 
     public static void main(String[] args) {
@@ -97,12 +97,22 @@ public class Amphipods {
 
     private static boolean moveFromLower(int room, int end, int[] hallway, int[] upper, int[] lower, int[] scores) {
 
+        // todo - move these common lower/upper validations to a shared method
         if (room == 0) // intentional to simulate no move
             return false;
+
+        // todo - don't move to spaces immediately outside a room
+        if (endingIsOutsideRoomEntrance(end))
+            return false;
+
 
         int amphipod = lower[room];
         if (amphipod == 0) // check that there's an amphipod to move -- i.e. not '0'
             return false;
+
+        if (pieceInCorrectRoom(amphipod, room)) // don't move a piece out of a room it's in
+            return false;
+
 
         int start = getHallwayRoomPosition(room);
 
@@ -122,13 +132,34 @@ public class Amphipods {
         return true;
     }
 
+
+    private static boolean endingIsOutsideRoomEntrance(int end) {
+        if (end == 3 || end == 5 || end == 7 || end ==9)
+            return true;
+        return false;
+    }
+
+    private static boolean pieceInCorrectRoom(int amphipod, int room) {
+        if (roomsByAmphipod.get(amphipod) == room)
+            return true;
+        return false;
+    }
+
+
     private static boolean moveFromUpper(int room, int end, int[] hallway, int[] upper, int[] scores) {
 
         if (room == 0) // intentional to simulate no move
             return false;
 
+        // todo - don't move to spaces immediately outside a room
+        if (endingIsOutsideRoomEntrance(end))
+            return false;
+
         int amphipod = upper[room];
         if (amphipod == 0) // check that there's an amphipod to move -- i.e. not '0'
+            return false;
+
+        if (pieceInCorrectRoom(amphipod, room)) // don't move a piece out of a room it's in
             return false;
 
         int start = getHallwayRoomPosition(room);
@@ -154,7 +185,7 @@ public class Amphipods {
             score += 2; //moving from lower room
         }
         System.out.println("Amphipod = " + amphipod);
-        scores[rooms.get(amphipod)-1] = scores[rooms.get(amphipod)-1] + score;
+        scores[roomsByAmphipod.get(amphipod)-1] = scores[roomsByAmphipod.get(amphipod)-1] + score;
         return score;
     }
 
@@ -167,17 +198,18 @@ public class Amphipods {
 
         // move and update score
         int score = moveToRoom(amphipod, start, hallway, upper, lower);
-        scores[rooms.get(amphipod)-1] = scores[rooms.get(amphipod)-1] + score;
+        scores[roomsByAmphipod.get(amphipod)-1] = scores[roomsByAmphipod.get(amphipod)-1] + score;
 
         return score == 0 ? false : true;
     }
 
     private static int moveToRoom(int amphipod, int start, int[] hallway, int[] upper, int[] lower) {
-        int room = rooms.get(amphipod);
+        int room = roomsByAmphipod.get(amphipod);
+        int end = getHallwayRoomPosition(room);
         int score = 0;
 
         // check no other piece is in the way
-        if (!isHallwayClear(hallway, start, room))
+        if (!isHallwayClear(hallway, start, end))
             return score;
 
         if (upper[room] + lower[room] == 0) { // both empty
@@ -186,7 +218,6 @@ public class Amphipods {
             lower[room] = amphipod;
 
             // calculate scores
-            int end = getHallwayRoomPosition(room);
             score = getHallwayMoveScore(start, end, amphipod);
             score += 2; // moved to lower room
 
@@ -196,7 +227,6 @@ public class Amphipods {
             upper[room] = amphipod;
 
             // calculate scores
-            int end = getHallwayRoomPosition(room);
             score = getHallwayMoveScore(start, end, amphipod);
             score += 1; // moved to upper room
         }
@@ -245,7 +275,7 @@ public class Amphipods {
         for (int i = 1; i < lower.length; i++) {
             System.out.print(amphipods.get(lower[i]) + "#");
         }
-        System.out.println("\n  #########");
+        System.out.println("\n  #########\n");
     }
 
     private static void setupTestGame() {
