@@ -31,7 +31,7 @@ public class Amphipods {
     public static void main(String[] args) {
         setupTestGame();
         //setupPuzzleGame();
-        printGame();
+        //printGame(hallway, upper, lower);
         move(hallway, upper, lower, scores);
 
         Collections.sort(finalScores);
@@ -39,6 +39,8 @@ public class Amphipods {
     }
 
     private static void move(int[] hallway, int[] upper, int[] lower, int[] scores) {
+
+        printGame(hallway, upper, lower);
 
         if (allAmphipodsHome(hallway, upper, lower)) {
             saveFinalScore(scores);
@@ -98,15 +100,16 @@ public class Amphipods {
         if (room == 0) // intentional to simulate no move
             return false;
 
-        // todo - check that there's an amphipod to move -- i.e. not '0'
-
         int amphipod = lower[room];
+        if (amphipod == 0) // check that there's an amphipod to move -- i.e. not '0'
+            return false;
+
         int start = getHallwayRoomPosition(room);
 
         if (upper[room] != 0)
             return false;
 
-        if (!isHallwayClear(start, end))
+        if (!isHallwayClear(hallway, start, end))
             return false;
 
         // calculates and updates score
@@ -124,12 +127,13 @@ public class Amphipods {
         if (room == 0) // intentional to simulate no move
             return false;
 
-        // todo - check that there's an amphipod to move -- i.e. not '0'
-
         int amphipod = upper[room];
+        if (amphipod == 0) // check that there's an amphipod to move -- i.e. not '0'
+            return false;
+
         int start = getHallwayRoomPosition(room);
 
-        if (!isHallwayClear(start, end))
+        if (!isHallwayClear(hallway, start, end))
             return false;
 
         // calculates and updates score
@@ -173,7 +177,7 @@ public class Amphipods {
         int score = 0;
 
         // check no other piece is in the way
-        if (!isHallwayClear(start, room))
+        if (!isHallwayClear(hallway, start, room))
             return score;
 
         if (upper[room] + lower[room] == 0) { // both empty
@@ -208,15 +212,15 @@ public class Amphipods {
         return (room*2) +1;
     }
 
-    private static boolean isHallwayClear(int start, int end) {
+    private static boolean isHallwayClear(int[] hallway, int start, int end) {
         if (start < end) {
-            for (int i = start+1; i < end; i++) {
+            for (int i = start+1; i <= end; i++) {
                 if (!(hallway[i] == 0)) {
                     return false; // found a block
                 }
             }
         } else {
-            for (int i = start-1; i < end; i--) {
+            for (int i = start-1; i >= end; i--) {
                 if (!(hallway[i] == 0)) {
                     return false; // found a block
                 }
@@ -225,7 +229,7 @@ public class Amphipods {
         return true; // all clear
     }
 
-    private static void printGame() {
+    private static void printGame(int[] hallway, int[] upper, int[] lower) {
         System.out.println("#############");
         System.out.print("#");
         for (int i = 1; i < hallway.length; i++) {
