@@ -49,14 +49,27 @@ public class Amphipods {
 
         for (int a = 0; a < hallway.length; a++) { // select a hallway space
             boolean hallwayMove = moveFromHallway(a, hallway, upper, lower, scores); // see if a move is possible
+            if (allAmphipodsHome(hallway, upper, lower)) {
+                printGame(hallway, upper, lower);
+                saveFinalScore(scores);
+                return;
+            }
 
             for (int b = 0; b < upper.length; b++) { // select an upper room space
                 for (int c = 1; c < hallway.length; c++) { // select a hallway space
-                    boolean upperMove = moveFromUpper(b, c, hallway, upper, scores); // see if a move is possible
+                    boolean upperMove = moveFromUpper(b, c, hallway, upper, lower, scores); // see if a move is possible
+                    if (allAmphipodsHome(hallway, upper, lower)) {
+                        saveFinalScore(scores);
+                        return;
+                    }
 
                     for (int d = 0; d < lower.length; d++) { // select a lower room space
                         for (int e = 1; e < hallway.length; e++) { // select a hallway space
                             boolean lowerMove = moveFromLower(d, e, hallway, upper, lower, scores);
+                            if (allAmphipodsHome(hallway, upper, lower)) {
+                                saveFinalScore(scores);
+                                return;
+                            }
 
                             if (hallwayMove || upperMove || lowerMove) { // if a piece has moved
                                 move(Arrays.copyOf(hallway, hallway.length),
@@ -110,9 +123,8 @@ public class Amphipods {
         if (amphipod == 0) // check that there's an amphipod to move -- i.e. not '0'
             return false;
 
-        if (pieceInCorrectRoom(amphipod, room)) // don't move a piece out of a room it's in
+        if (pieceInCorrectRoom(amphipod, room)) // don't move a belonging piece out of a lower room
             return false;
-
 
         int start = getHallwayRoomPosition(room);
 
@@ -146,12 +158,11 @@ public class Amphipods {
     }
 
 
-    private static boolean moveFromUpper(int room, int end, int[] hallway, int[] upper, int[] scores) {
+    private static boolean moveFromUpper(int room, int end, int[] hallway, int[] upper, int[] lower, int[] scores) {
 
         if (room == 0) // intentional to simulate no move
             return false;
 
-        // todo - don't move to spaces immediately outside a room
         if (endingIsOutsideRoomEntrance(end))
             return false;
 
@@ -159,7 +170,9 @@ public class Amphipods {
         if (amphipod == 0) // check that there's an amphipod to move -- i.e. not '0'
             return false;
 
-        if (pieceInCorrectRoom(amphipod, room)) // don't move a piece out of a room it's in
+        // don't move a piece out of a room it's in
+        // todo - unless the piece beneath it in lower is not in the correct room
+        if (pieceInCorrectRoom(amphipod, room) && lower[room] == amphipod)
             return false;
 
         int start = getHallwayRoomPosition(room);
