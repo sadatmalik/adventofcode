@@ -28,7 +28,7 @@ public class AStar {
     public AStar(int width, int height, int si, int sj, int ei, int ej, int[][] blocks) {
         grid = new Cell[width][height];
         closedCells = new boolean[width][height];
-        openCells = new PriorityQueue<Cell>((Cell c1, Cell c2) -> {
+        openCells = new PriorityQueue<Cell>((Cell c1, Cell c2) -> { // construct with comparator
             return c1.finalCost < c2.finalCost ? -1 : c1.finalCost > c2.finalCost ? 1 : 0;
         });
         startCell(si, sj);
