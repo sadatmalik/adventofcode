@@ -128,7 +128,7 @@ public class AStar {
                     updateCostIfNeeded(current, t, current.finalCost + DIAGONAL_COST);
                 }
                 if (current.j + 1 < grid[0].length) {
-                    t = grid[current.i + 1][current.j - 1];
+                    t = grid[current.i + 1][current.j + 1];
                     updateCostIfNeeded(current, t, current.finalCost + DIAGONAL_COST);
                 }
             }
@@ -144,12 +144,75 @@ public class AStar {
                 else if (i == endI && j == endJ)
                     System.out.print("DE  ");  // destination cell
                 else if (grid[i][j] != null)
-                    System.out.printf("%-3d", 0);
+                    System.out.printf("%-4d", 0);
                 else
                     System.out.print("BL  ");  // block cell
             }
             System.out.println();
         }
         System.out.println();
+    }
+
+    public void displayScore() {
+        System.out.println("\nScores for cells :");
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[i].length; j++) {
+                if (grid[i][j] != null) {
+                    System.out.printf("%-4d", grid[i][j].finalCost);
+                } else {
+                    System.out.print("BL  ");
+                }
+            }
+            System.out.println();
+        }
+        System.out.println();
+    }
+
+    public void displaySolution() {
+        if (closedCells[endI][endJ]) {
+            // track back the path
+            System.out.println("Path :");
+            Cell current = grid[endI][endJ];
+            System.out.print(current);
+
+            grid[current.i][current.j].solution = true;
+
+            while (current.parent != null) {
+                System.out.print(" -> " + current.parent);
+                grid[current.parent.i][current.parent.j].solution = true;
+                current = current.parent;
+            }
+
+            System.out.println("\n");
+
+            for (int i = 0; i < grid.length; i++) {
+                for (int j = 0; j < grid[i].length; j++) {
+                    if (i == startI && j == startJ)
+                        System.out.print("SO  "); // source cell
+                    else if (i == endI && j == endJ)
+                        System.out.print("DE  ");  // destination cell
+                    else if (grid[i][j] != null)
+                        System.out.printf("%-4s", grid[i][j].solution ? "X" : "0");
+                    else
+                        System.out.print("BL  ");  // block cell
+                }
+                System.out.println();
+            }
+            System.out.println();
+        } else {
+            System.out.println("No possible path");
+        }
+    }
+
+    public static void main(String[] args) {
+        AStar astar = new AStar(5, 5, 0, 0, 3, 2,
+                new int[][] {
+                        {0,4}, {2,2}, {3,1}, {3,3}, {2,1}, {2,3}
+                }
+        );
+        astar.display();
+        astar.process(); // apply A* algorithm
+        astar.displayScore(); // display scores on grid
+        astar.displaySolution(); // display solution path
     }
 }
