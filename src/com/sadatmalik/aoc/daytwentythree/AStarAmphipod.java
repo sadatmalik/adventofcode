@@ -15,6 +15,7 @@ public class AStarAmphipod {
     public static void main(String[] args) {
         AStarAmphipod aStar = new AStarAmphipod();
         GameNode lastNode = aStar.process();
+        aStar.printPath(lastNode);
         System.out.println("Final cost = " + lastNode.finalCost());
     }
 
@@ -34,11 +35,19 @@ public class AStarAmphipod {
                 new int[] {1, 10, 100, 1000}
         );
 
-        startNode =  new GameNode(
+        GameNode testStart = new GameNode(
                 new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                 new int[] {10, 100, 10, 1000}, // B C B D
                 new int[] {1, 1000, 100, 1} // A D C A
         );
+
+        GameNode puzzleStart = new GameNode(
+                new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                new int[] {1000, 100, 1000, 10}, // D C D B
+                new int[] {100, 1, 1, 10} // C A A B
+        );
+
+        startNode = puzzleStart;
     }
 
     public GameNode process() {
@@ -47,7 +56,7 @@ public class AStarAmphipod {
 
         while(true) {
             GameNode current = openNodes.poll();
-            printGame(current);
+            //printNode(current);
 
             if (current.equals(endNode)) // reached goal
                 return current;
@@ -80,18 +89,30 @@ public class AStarAmphipod {
                     if (n.finalCost() < pastNode.finalCost()) {
                         parentByNode.put(n, current); // update cost and parent with n and current
                         openNodes.add(n);
+                        //printScores(n, current);
                     }
 
                 } else  {
                     parentByNode.put(n, current);
                     openNodes.add(n);
+                    //printScores(n, current);
                 }
             }
         }
         return null; // no path found
     }
 
-    private void printGame(GameNode node) {
+    private void printScores(GameNode parent, GameNode node) {
+        System.out.println("Node: ");
+        printNode(node);
+        System.out.println(node.finalCost());
+
+        System.out.println("Parent:");
+        printNode(parent);
+        System.out.println(parent.finalCost());
+    }
+
+    private void printNode(GameNode node) {
         System.out.println("#############");
         System.out.print("#");
         for (int i = 0; i < node.getHallway().length; i++) {
@@ -110,4 +131,16 @@ public class AStarAmphipod {
         System.out.println("\n  #########\n");
     }
 
+    private void printPath(GameNode node) {
+        List<GameNode> path = new ArrayList<>();
+        while (node != null) {
+            path.add(0, node);
+            node = parentByNode.get(node);
+        }
+        int move = 0;
+        for (GameNode n : path) {
+            System.out.println("Move #" + move++);
+            printNode(n);
+        }
+    }
 }

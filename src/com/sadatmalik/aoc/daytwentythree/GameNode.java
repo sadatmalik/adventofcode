@@ -105,7 +105,7 @@ public class GameNode {
 
             // calculate scores
             score = getHallwayMoveScore(start, end, amphipod);
-            score += 2; // moved to lower room
+            score += 2 * amphipod; // moved to lower room
 
         } else if (lower[room] == amphipod && upper[room] == 0) {
             // move to upper room
@@ -114,7 +114,7 @@ public class GameNode {
 
             // calculate scores
             score = getHallwayMoveScore(start, end, amphipod);
-            score += 1; // moved to upper room
+            score += 1 * amphipod; // moved to upper room
         } else {
             return null; // either no open rooms or lower has the wrong amphipod
         }
@@ -217,11 +217,11 @@ public class GameNode {
         int score = Math.abs(start - end) * amphipod;
         GameNode newNode = copyGameNode();
         if (fromUpper) {
-            score += 1; //moving from upper room
+            score += 1 * amphipod; //moving from upper room
             newNode.upper[room] = 0;
             newNode.hallway[end] = amphipod;
         } else {
-            score += 2; //moving from lower room
+            score += 2 * amphipod; //moving from lower room
             newNode.lower[room] = 0;
             newNode.hallway[end] = amphipod;
         }
