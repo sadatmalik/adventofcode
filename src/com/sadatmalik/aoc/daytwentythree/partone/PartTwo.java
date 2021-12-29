@@ -148,8 +148,11 @@ public class PartTwo extends AStarAmphipod {
 
     public static void main(String[] args) {
         PartTwo aStar = new PartTwo();
+        long start = System.currentTimeMillis();
         PartTwoNode lastNode = (PartTwoNode) aStar.process();
+        long end = System.currentTimeMillis();
         aStar.printPath(lastNode);
         System.out.println("Final cost = " + lastNode.finalCost());
+        System.out.println("Compute time = " + (end - start) + "s");
     }
 }

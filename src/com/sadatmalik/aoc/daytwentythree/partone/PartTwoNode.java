@@ -287,6 +287,86 @@ public class PartTwoNode extends GameNode {
         return newNode;
     }
 
+    void updateScores(int score, PartTwoNode newNode) {
+        newNode.gCost = gCost + score;
+        newNode.hCost = heuristicScore(newNode);
+        newNode.fCost = newNode.gCost + newNode.hCost;
+    }
+
+    private int heuristicScore(PartTwoNode newNode) {
+        int h = 0;
+        // upper
+        for (int i = 0; i < newNode.upper.length; i++) {
+            int a = newNode.upper[i];
+            if (a != 0) { // found an amphipod here
+                if (!pieceInCorrectRoom(a, i)) {
+                    int aRoom = roomsByAmphipod.get(a);
+                    h += heuristicFromRoomToRoom(a, i, aRoom, 1);
+                }
+            }
+        }
+
+        // upperB
+        for (int i = 0; i < newNode.upperB.length; i++) {
+            int a = newNode.upperB[i];
+            if (a != 0) { // found an amphipod here
+                if (!pieceInCorrectRoom(a, i)) {
+                    int aRoom = roomsByAmphipod.get(a);
+                    h += heuristicFromRoomToRoom(a, i, aRoom, 2);
+                }
+            }
+        }
+
+        // lowerA
+        for (int i = 0; i < newNode.lowerA.length; i++) {
+            int a = newNode.lowerA[i];
+            if (a != 0) { // found an amphipod here
+                if (!pieceInCorrectRoom(a, i)) {
+                    int aRoom = roomsByAmphipod.get(a);
+                    h += heuristicFromRoomToRoom(a, i, aRoom, 3);
+                }
+            }
+        }
+
+        // lower
+        for (int i = 0; i < newNode.lower.length; i++) {
+            int a = newNode.lower[i];
+            if (a != 0) { // found an amphipod here
+                if (!pieceInCorrectRoom(a, i)) {
+                    int aRoom = roomsByAmphipod.get(a);
+                    h += heuristicFromRoomToRoom(a, i, aRoom, 4);
+                }
+            }
+        }
+
+        // hallway
+        for (int i = 0; i < newNode.hallway.length; i++) {
+            int a = newNode.hallway[i];
+            if (a != 0) { // found an amphipod here
+                int aRoom = roomsByAmphipod.get(a);
+                h += heuristicFromHallwayToRoom(a, i, aRoom);
+            }
+        }
+
+        return h;
+    }
+
+    private int heuristicFromHallwayToRoom(int amphipod, int start, int room) {
+        int end = getHallwayRoomPosition(room);
+        int hallwayMove = getHallwayMoveScore(start, end, amphipod);
+
+        return hallwayMove + amphipod;
+    }
+
+    private int heuristicFromRoomToRoom(int amphipod, int startRoom, int endRoom, int floor) {
+        int start = getHallwayRoomPosition(startRoom);
+        int end = getHallwayRoomPosition(endRoom);
+        int hallwayMove = getHallwayMoveScore(start, end, amphipod);
+
+        return hallwayMove + (floor * 2 * amphipod);
+    }
+
+
     private PartTwoNode copyGameNode() {
         int[] newHallway = Arrays.copyOf(hallway, hallway.length);
         int[] newUpper = Arrays.copyOf(upper, upper.length);
