@@ -1,4 +1,4 @@
-package com.sadatmalik.aoc.daytwentythree;
+package com.sadatmalik.aoc.daytwentythree.partone;
 
 import java.util.*;
 

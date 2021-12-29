@@ -1,16 +1,16 @@
-package com.sadatmalik.aoc.daytwentythree;
+package com.sadatmalik.aoc.daytwentythree.partone;
 
 import java.util.*;
 
 public class GameNode {
 
-    private int[] hallway;
-    private int[] upper;
-    private int[] lower;
+    int[] hallway;
+    int[] upper;
+    int[] lower;
 
-    private int fCost;
-    private int gCost;
-    private int hCost;
+    int fCost;
+    int gCost;
+    int hCost;
 
     static Map<Integer, String> amphipods = new HashMap<>();
     static Map<Integer, Integer> roomsByAmphipod = new HashMap<>();
@@ -29,9 +29,9 @@ public class GameNode {
     }
 
     public GameNode() {
-        int[] hallway = new int[11]; //intialises to 0
-        int[] upper = new int[4]; // initialise with puzzle inputs
-        int[] lower = new int[4];
+        hallway = new int[11]; //intialises to 0
+        upper = new int[4]; // initialise with puzzle inputs
+        lower = new int[4];
     }
 
     public GameNode(int[] hallway, int[] upper, int[] lower) {
@@ -40,11 +40,11 @@ public class GameNode {
         this.lower = lower;
     }
 
-    public int finalCost() {
+    int finalCost() {
         return fCost;
     }
 
-    public List<GameNode> getAllPossibleMoves() {
+    List<GameNode> getAllPossibleMoves() {
         List<GameNode> moves = new ArrayList<>();
         // moves from hallway
         for (int a = 0; a < hallway.length; a++) { // select a hallway space
@@ -124,11 +124,11 @@ public class GameNode {
         return newNode;
     }
 
-    private int getHallwayRoomPosition(int room) {
+    int getHallwayRoomPosition(int room) {
         return (room*2) + 2;
     }
 
-    private boolean isHallwayClear(int start, int end) {
+    boolean isHallwayClear(int start, int end) {
         if (start < end) {
             for (int i = start+1; i <= end; i++) {
                 if (!(hallway[i] == 0)) {
@@ -145,7 +145,7 @@ public class GameNode {
         return true; // all clear
     }
 
-    private static int getHallwayMoveScore(int start, int end, int amphipod) {
+    static int getHallwayMoveScore(int start, int end, int amphipod) {
         int moves = Math.abs(end - start);
         return moves * amphipod;
     }
@@ -173,7 +173,7 @@ public class GameNode {
         return movedFromRoom;
     }
 
-    private  GameNode moveFromLower(int room, int end) {
+    private GameNode moveFromLower(int room, int end) {
 
         // todo - move these common lower/upper validations to a shared method
 
@@ -201,13 +201,13 @@ public class GameNode {
         return movedFromRoom;
     }
 
-    private static boolean endingIsOutsideRoomEntrance(int end) {
+    static boolean endingIsOutsideRoomEntrance(int end) {
         if (end == 2 || end == 4 || end == 6 || end == 8)
             return true;
         return false;
     }
 
-    private static boolean pieceInCorrectRoom(int amphipod, int room) {
+    static boolean pieceInCorrectRoom(int amphipod, int room) {
         if (roomsByAmphipod.get(amphipod) == room)
             return true;
         return false;
@@ -239,20 +239,20 @@ public class GameNode {
         return new GameNode(newHallway, newUpper, newLower);
     }
 
-    private void updateScores(int score, GameNode newNode) {
+    void updateScores(int score, GameNode newNode) {
         newNode.gCost = gCost + score;
         newNode.fCost = newNode.gCost + newNode.hCost;
     }
 
-    public int[] getHallway() {
+    int[] getHallway() {
         return hallway;
     }
 
-    public int[] getUpper() {
+    int[] getUpper() {
         return upper;
     }
 
-    public int[] getLower() {
+    int[] getLower() {
         return lower;
     }
 
