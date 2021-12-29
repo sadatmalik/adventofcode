@@ -7,11 +7,16 @@ public class AStarAmphipod {
     Queue<GameNode> openNodes;
     Set<GameNode> closedNodes; // game nodes with no possible next move
 
-    Set<GameNode> allNodes;
     Map<GameNode, GameNode> parentByNode; // maps nodes to their current set 'least cost' parent
 
     GameNode startNode;
     GameNode endNode;
+
+    public static void main(String[] args) {
+        AStarAmphipod aStar = new AStarAmphipod();
+        GameNode lastNode = aStar.process();
+        System.out.println("Final cost = " + lastNode.finalCost());
+    }
 
     public AStarAmphipod() {
         this.openNodes = new PriorityQueue<GameNode>((GameNode g1, GameNode g2) -> {
@@ -19,12 +24,30 @@ public class AStarAmphipod {
                     g1.finalCost() > g2.finalCost() ? 1 : 0;
         });
 
-        // todo - define start and end game nodes
+        closedNodes = new HashSet<>();
+        parentByNode = new HashMap<>();
+
+        // define start and end game nodes
+        endNode =  new GameNode(
+                new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                new int[] {1, 10, 100, 1000},
+                new int[] {1, 10, 100, 1000}
+        );
+
+        startNode =  new GameNode(
+                new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                new int[] {10, 100, 10, 1000}, // B C B D
+                new int[] {1, 1000, 100, 1} // A D C A
+        );
     }
 
     public GameNode process() {
+
+        openNodes.add(startNode);
+
         while(true) {
             GameNode current = openNodes.poll();
+            printGame(current);
 
             if (current.equals(endNode)) // reached goal
                 return current;
@@ -66,6 +89,25 @@ public class AStarAmphipod {
             }
         }
         return null; // no path found
+    }
+
+    private void printGame(GameNode node) {
+        System.out.println("#############");
+        System.out.print("#");
+        for (int i = 0; i < node.getHallway().length; i++) {
+            System.out.print(node.amphipods.get(node.getHallway()[i]));
+        }
+        System.out.println("#");
+        System.out.print("###");
+        for (int i = 0; i < node.getUpper().length; i++) {
+            System.out.print(node.amphipods.get(node.getUpper()[i]) + "#");
+        }
+        System.out.println("##");
+        System.out.print("  #");
+        for (int i = 0; i < node.getLower().length; i++) {
+            System.out.print(node.amphipods.get(node.getLower()[i]) + "#");
+        }
+        System.out.println("\n  #########\n");
     }
 
 }
