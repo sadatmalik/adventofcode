@@ -232,7 +232,8 @@ add y w
 add y 10
 mul y x
 add z y
-inp w
+
+inp w13
 mul x 0
 add x z
 mod x 26

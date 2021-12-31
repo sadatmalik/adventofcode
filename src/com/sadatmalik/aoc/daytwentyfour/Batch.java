@@ -1,5 +1,6 @@
 package com.sadatmalik.aoc.daytwentyfour;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,7 +10,7 @@ public class Batch {
     int batchNum;
 
     private List<String> instructions;
-    private int[] wxyz = new int[4];
+    private long[] wxyz = new long[4];
 
     private static Map<String, Integer> letterToIndex;
 
@@ -21,15 +22,26 @@ public class Batch {
         letterToIndex.put("z", 3);
     }
 
-    public Batch(List<String> instructions, int x, int y, int z) {
+    public Batch(List<String> instructions, long x, long y, long z) {
         this.instructions = instructions;
         wxyz[1] = x;
         wxyz[2] = y;
         wxyz[3] = z;
     }
 
+    @Override
+    public String toString() {
+        return "Batch{" +
+                "batchNum=" + batchNum +
+                ", wxyz=" + Arrays.toString(wxyz) +
+                '}';
+    }
+
     public void runInstruction(int i) throws BatchArithmeticException {
         String instruction = instructions.get(i);
+
+        System.out.println("Batch: " + batchNum + ", Running: " + instruction);
+
         String[] split = instruction.split(" ");
         String operator = split[0];
         String op1 = split[1];
@@ -61,6 +73,8 @@ public class Batch {
                 equals(op1, op2);
                 break;
         }
+
+        System.out.println(this);
     }
 
     private void add(String op1, String op2) {
@@ -100,27 +114,27 @@ public class Batch {
                 wxyz[letterToIndex.get(op1)] == getOperand2(op2) ? 1 : 0;
     }
 
-    private int getOperand2(String op2) {
+    private long getOperand2(String op2) {
         if (op2.equals("w") || op2.equals("x") || op2.equals("y") || op2.equals("z")) {
             return wxyz[letterToIndex.get(op2)];
         } else {
-            return Integer.parseInt(op2);
+            return Long.parseLong(op2);
         }
     }
 
-    public void setW(int w) {
+    public void setW(long w) {
         wxyz[0] = w;
     }
 
-    public void setX(int x) {
+    public void setX(long x) {
         wxyz[1] = x;
     }
 
-    public void setY(int y) {
+    public void setY(long y) {
         wxyz[2] = y;
     }
 
-    public void setZ(int z) {
+    public void setZ(long z) {
         wxyz[3] = z;
     }
 
@@ -128,19 +142,19 @@ public class Batch {
         return instructions;
     }
 
-    public int getW() {
+    public long getW() {
         return wxyz[0];
     }
 
-    public int getX() {
+    public long getX() {
         return wxyz[1];
     }
 
-    public int getY() {
+    public long getY() {
         return wxyz[2];
     }
 
-    public int getZ() {
+    public long getZ() {
         return wxyz[3];
     }
 }

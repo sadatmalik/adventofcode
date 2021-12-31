@@ -19,16 +19,16 @@ public class ArithmeticLogicUnit {
         printModelNumber();
     }
 
-    private static void process(Batch batch, int wMax) {
+    private static void process(Batch batch, long wMax) {
 
-        for (int i = wMax; i > 0; i--) {
+        for (long i = wMax; i > 0; i--) {
             try {
                 execute(batch, i);
                 batch.setW(i);
-                if (batch.batchNum < 14) {
+                if (batch.batchNum < 13) {
                     Batch next = batches.get(batch.batchNum+1);
-                    next.setX(batch.getX());
-                    next.setY(batch.getY());
+                    //next.setX(batch.getX());
+                    //next.setY(batch.getY());
                     next.setZ(batch.getZ());
                     process(next, 9);
                 }
@@ -49,8 +49,8 @@ public class ArithmeticLogicUnit {
                       Batch previous = batches.get(batch.batchNum-1);
                       if (batch.batchNum > 1) {
                           Batch previousPrevious = batches.get(batch.batchNum - 1);
-                          previous.setX(previousPrevious.getX());
-                          previous.setY(previousPrevious.getY());
+                          //previous.setX(previousPrevious.getX());
+                          //previous.setY(previousPrevious.getY());
                           previous.setZ(previousPrevious.getZ());
                       } else {
                           previous.setX(0);
@@ -70,7 +70,8 @@ public class ArithmeticLogicUnit {
         }
     }
 
-    private static void execute(Batch batch, int w) throws BatchArithmeticException {
+    private static void execute(Batch batch, long w) throws BatchArithmeticException {
+        System.out.println("Execute batch " + batch.batchNum + ", with w = " + w);
         List<String> instructions = batch.getInstructions();
         // todo - save initial values of w, x, ,y, z
         for (int i = 1; i < instructions.size(); i++) {
@@ -79,9 +80,11 @@ public class ArithmeticLogicUnit {
                 batch.runInstruction(i);
             } catch (BatchArithmeticException bae) {
                 // todo - reset w, x, y, z if exception thrown
+                System.out.println("Exception: " + bae.msg);
                 throw bae;
             }
         }
+        System.out.println();
     }
 
     private static void prepareBatchJobs() {
@@ -106,10 +109,15 @@ public class ArithmeticLogicUnit {
     }
 
     private static void printModelNumber() {
-        System.out.println("Model Number = ");
+        System.out.print("Model Number = ");
+        StringBuffer sb = new StringBuffer();
         for (int i = 0; i < batches.size(); i++) {
             System.out.print(batches.get(i).getW());
+            sb.append("Batch: " + batches.get(i).batchNum + ", w = " + batches.get(i).getW()
+                    + ", z = " + batches.get(i).getZ() + " (x26 = " + batches.get(i).getZ() * 26 + ")\n");
         }
         System.out.println();
+        System.out.println(sb);
+
     }
 }
