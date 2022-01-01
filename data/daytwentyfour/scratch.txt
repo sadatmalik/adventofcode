@@ -1,0 +1,67 @@
+Execute batch 0, with w = 9
+Batch: 0, Running: add z w
+Batch{batchNum=0, wxyz=[9, 1, 9, 0]}
+Batch: 0, Running: add z 15
+Batch{batchNum=0, wxyz=[9, 1, 9, 24]}
+
+Execute batch 1, with w = 9
+Batch: 1, Running: mul z 26
+Batch{batchNum=1, wxyz=[9, 1, 26, 624]}
+Batch: 1, Running: add z w
+Batch: 1, Running: add z 10
+Batch{batchNum=1, wxyz=[9, 1, 19, 643]}
+
+Execute batch 2, with w = 9
+Batch: 2, Running: add x z
+Batch{batchNum=2, wxyz=[9, 643, 0, 643]}
+Batch: 2, Running: mod x 26
+Batch{batchNum=2, wxyz=[9, 19, 0, 643]}
+Batch: 2, Running: add x 12
+Batch{batchNum=2, wxyz=[9, 31, 0, 643]}
+Batch: 2, Running: eql x w
+Batch{batchNum=2, wxyz=[9, 0, 0, 643]}
+Batch: 2, Running: eql x 0
+Batch{batchNum=2, wxyz=[9, 1, 0, 643]}
+
+Batch: 2, Running: add y 25
+Batch{batchNum=2, wxyz=[9, 1, 25, 643]}
+Batch: 2, Running: mul y x
+Batch{batchNum=2, wxyz=[9, 1, 25, 643]}
+Batch: 2, Running: add y 1
+Batch{batchNum=2, wxyz=[9, 1, 26, 643]}
+Batch: 2, Running: mul z y
+Batch{batchNum=2, wxyz=[9, 1, 26, 16718]}
+Batch: 2, Running: mul y 0
+Batch{batchNum=2, wxyz=[9, 1, 0, 16718]}
+Batch: 2, Running: add y w
+Batch{batchNum=2, wxyz=[9, 1, 9, 16718]}
+Batch: 2, Running: add y 2
+Batch{batchNum=2, wxyz=[9, 1, 11, 16718]}
+Batch: 2, Running: mul y x
+Batch{batchNum=2, wxyz=[9, 1, 11, 16718]}
+Batch: 2, Running: add z y
+Batch{batchNum=2, wxyz=[9, 1, 11, 16729]}
+
+
+
+
+
+
+inp w13
+mul x 0
+add x z
+mod x 26
+div z 26
+add x -14
+eql x w
+eql x 0
+mul y 0
+add y 25
+mul y x
+add y 1
+mul z y
+mul y 0
+add y w
+add y 13
+mul y x
+add z y
